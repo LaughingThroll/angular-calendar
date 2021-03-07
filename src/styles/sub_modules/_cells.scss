@@ -1,0 +1,60 @@
+$vac-border-radius: 3px;
+$vac-padding: 2px;
+
+.cell-gray {
+  background-color: $weekend;
+}
+
+.cell-vacations {
+  position: relative;
+  text-align: center;
+  color: $white;
+  
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 1px;
+  }
+  &--paid {
+    line-height: 2.3rem;
+    &::before {
+      height: 2.25rem;
+    }
+  }
+  &--unpaid {
+    line-height: 2.1rem;
+    &::before {
+      height: 2.05rem;
+    }
+  }
+
+  &--start-vac,
+  &--end-vac {
+    width: calc(100% - #{$vac-padding});
+  } 
+  &--start-vac {
+    margin-left: auto;
+    border-top-left-radius: $vac-border-radius;
+    border-bottom-left-radius: $vac-border-radius;
+       
+  }
+  &--end-vac {
+    margin-right: auto;
+    border-top-right-radius: $vac-border-radius;
+    border-bottom-right-radius: $vac-border-radius;  
+    &::before {
+      display: none;
+    }
+  }
+}
+
+.cell-vacations--start-vac.cell-vacations--end-vac {
+  margin: 0 auto;
+  width: calc(100% - #{$vac-padding * 2});
+  &::before {
+    display: none;
+  }
+}

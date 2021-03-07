@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 @import './variables';
 
+@import './sub_modules/button';
+@import './sub_modules/cells';
+
 html {
   box-sizing: border-box;
   font-size: $main-fz;

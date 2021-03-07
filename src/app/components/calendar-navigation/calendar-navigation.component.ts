@@ -15,17 +15,15 @@ export class CalendarNavigationComponent implements OnInit, OnDestroy {
   constructor(private dateService: DateService) {}
 
   ngOnInit(): void {
-    if (this.date$) return 
     this.date$ = this.dateService.getDate().subscribe({next: date => this.date = date })
   }
 
-  changeDate(number: number) {
+  changeDate(number: number): void {
     this.dateService.changeDate(this.date, number)
   }
 
-  ngOnDestroy() {
-    if (!this.date$) return
-    this.date$.unsubscribe()
+  ngOnDestroy(): void {
+    this.date$?.unsubscribe()
   }
 
 }
