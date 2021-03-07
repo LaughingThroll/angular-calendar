@@ -1,0 +1,48 @@
+$black: #000;
+$white: #fff;
+$apple: #48ba46;
+$gray: rgba(126, 126, 126, 0.3);
+$gallery: #f0f0f0;
+$dusty-gray: #949494;
+$scorpion: #575757;
+$dove-gray: #666;
+$alto: #d0d0d0;
+$mercury: #e9e9e9;
+// THEMES_COLOR
+$melrose: #9b99ff;
+$melrose-bg: rgba(155, 153, 255, 0.1);
+$malibu: #7aafff;
+$malibu-bg: rgba(122, 175, 255, 0.1);
+$mona-lisa: #f99;
+$mona-lisa-bg: rgba(255, 153, 153, 0.1);
+$atomic-tangerine: #ffa768;
+$atomic-tangerine-bg: rgba(255, 167, 104, 0.1);
+
+$main-color: $black;
+$main-border: $gray;
+$button--primary: $apple;
+$button--secondary: $scorpion;
+$button--secondary-border: $alto;
+$button--disabled: $alto;
+$weekend: $gallery;
+$users-count: $dusty-gray;
+$overlay: rgba(0, 0, 0, 0.65);
+$modal-bg: $white;
+$modal-header-bg: $gallery;
+$modal-footer-bg: $alto;
+$modal-title-color: $scorpion;
+$modal-days-color: $dove-gray;
+$input-date-border: $alto;
+$select-bg: $mercury;
+
+// FONT
+$main-font: "Open Sans", sans-serif;
+// + or - size * on number [.5, .75, 1.25, 1.5]
+$main-fz: 12px;
+$main-line-height: 18px;
+
+// CONTAINER
+$main-width: 1350px;
+$main-padding: 15px;
+// TRANSITION_TIMES
+$fast: 0.5s;
