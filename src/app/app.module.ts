@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CalendarNavigationComponent } from './components/calendar-navigation/calendar-navigation.component';
-// import { DateService } from './services/date.service';
+
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { CalendarNavigationComponent } from './components/calendar-navigation/ca
     CalendarNavigationComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

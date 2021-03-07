@@ -1,0 +1,41 @@
+@import 'mixin';
+
+.button {
+  @extend %font-bold;
+
+  padding: 10px;
+  min-width: 144px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color $fast linear, color $fast linear;
+
+  &--primary {
+    background-color: $button--primary;
+    color: $white;
+  }
+
+  &--secondary {
+    border: 1px solid $button--secondary-border;
+    color: $scorpion;
+  }
+
+  &--disabled {
+    pointer-events: none;
+    background-color: $button--disabled;
+  }
+
+  &--icon-plus {
+    &::before {
+      content: "";
+      background-image: url("./../../assets/images/icons/plus.svg");
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 13px;
+      height: 13px;
+      margin-right: 10px;
+    }
+  }
+}

@@ -5,20 +5,33 @@
     <app-calendar-navigation></app-calendar-navigation>
 
     <table class="calendar-table">
-      
+      <!-- THIS IS COMPONENT BUT HOW ??? -->
       <thead class="calendar-header">
-        <tr>
-        <td>
-          HEADER
-        </td>  
-      </tr>
+
+        <tr class="calendar-header__row">
+          <th class="calendar-header__cell">
+            <!-- CLICK OPEN_MODAL -->
+            <button class="button button--icon-plus button--primary">Add vacation</button>
+          </th>
+
+          <th *ngFor="let date of allDays" [ngClass]="{
+              'calendar-header__cell': true, 
+              'cell-gray': isWeekend(date)
+          }">
+            <span class="calendar-header__day">{{ date | date:"EEEEEE" }}</span>
+            <span class="calendar-header__number">{{ date | date:"d" }}</span>
+          </th>
+
+          <th class="calendar-header__cell cell-gray"> Sum </th>
+        </tr>
+
       </thead>
-      
+
       <tbody class="calendar-body">
         <tr>
           <td>
             BODY
-          </td>  
+          </td>
         </tr>
       </tbody>
 
@@ -26,10 +39,10 @@
         <tr>
           <td>
             FOOTER
-          </td>  
+          </td>
         </tr>
       </tfoot>
-    
+
     </table>
   </div>
 
