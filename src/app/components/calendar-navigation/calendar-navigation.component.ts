@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { DateService  } from './../../services/date.service'
+import { Subscription } from 'rxjs';
+import { DateService  } from './../../services/date/date.service'
 
 @Component({
   selector: 'app-calendar-navigation',

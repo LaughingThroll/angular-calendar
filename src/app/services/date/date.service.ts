@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { createArrayFromNumber } from './../utils/array'
-import { daysInMonth } from './../utils/date'
+import { createArrayFromNumber } from './../../utils/array'
+import { daysInMonth } from './../../utils/date'
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class DateService {
 
   getAllDayInMonth(date: Date): Date[] {
     return createArrayFromNumber(daysInMonth(date))
-      .map(day => new Date(new Date(date.getFullYear(), date.getMonth(), day)))
+      .map((day: number) => new Date(new Date(date.getFullYear(), date.getMonth(), day)))
   }
 
   isWeekend(date: Date): boolean {

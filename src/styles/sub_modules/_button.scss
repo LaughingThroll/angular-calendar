@@ -39,3 +39,20 @@
     }
   }
 }
+
+
+.button-arrow-up {
+  width: 12px;
+  height: 8px;
+  background-image: url("./../../assets/images/icons/arrow--up.svg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  outline: none;
+  &.is-group-open-btn {
+    transform: rotate(0);
+  }
+  &.is-group-closed-btn {
+    transform: rotate(180deg);
+  }
+}
