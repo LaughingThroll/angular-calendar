@@ -12,7 +12,6 @@ import { IMember, ITeam } from './interfaces/DB';
 export class AppComponent implements OnInit  {
   public allDays: Date[] = []
   public teams: ITeam[] = []
-  public members: IMember[] = []
   public allDays$: Subscription | null = null
   public teams$: Subscription | null = null
 
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit  {
     this.teams$ = this.dataService.getTeams().subscribe({
       next: teams => {
         this.teams = teams
-        this.members = teams.flatMap(({ members }) => members)
       },
       error: err => console.log('Custom Error', err) 
     })

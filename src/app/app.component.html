@@ -28,51 +28,54 @@
       </thead>
 
 
-
-
       <tbody class="calendar-body">
         <!-- TEAM -->
-
-        <tr *ngFor="let team of teams; let i = index" class="calendar-body__team calendar-table--indentation">
-          <td class="team team--common">
-            <span class="team__name">{{ team.name }}</span>
-            <div class="team__other">
-              <div class="team__users users">
-                <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
-                <span class="users__count">{{ team.members.length }}</span>
+        <ng-container *ngFor="let team of teams; let i = index">
+          <tr class="calendar-body__team calendar-table--indentation">
+            <td class="team team--common">
+              <span class="team__name">{{ team.name }}</span>
+              <div class="team__other">
+                <div class="team__users users">
+                  <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
+                  <span class="users__count">{{ team.members.length }}</span>
+                </div>
+                <div class="team__weekend-percent weekend-percent">{{ team.percentageOfAbsent[allDays[0].getMonth()] }}
+                </div>
+                <button class="button-arrow-up"></button>
               </div>
-              <div class="team__weekend-percent weekend-percent">{{ team.percentageOfAbsent[i] }}</div>
-              <button class="button-arrow-up"></button>
-            </div>
-          </td>
+            </td>
 
-          <!-- TEAM__CELL -->
+            <!-- TEAM__CELL -->
 
-          <td *ngFor="let date of allDays" [ngClass]="{
+            <td *ngFor="let date of allDays" [ngClass]="{
             'calendar-body__cell': true, 
             'cell-gray': isWeekend(date)
           }">
-          </td>
+            </td>
 
-          <td class="calendar-body__cell cell-gray"></td>
-        </tr>
+            <td class="calendar-body__cell cell-gray"></td>
+          </tr>
 
+          <!-- MEMBER -->
+          <tr *ngFor="let member of team.members" class="calendar-body__member">
+            <td class="team team--member calendar-body__cell">
+              <span class="team__name">{{ member.name }}</span>
+            </td>
+
+            <!-- TEAM__CELL -->
+            <td *ngFor="let date of allDays" [ngClass]="{
+            'calendar-body__cell': true, 
+            'cell-gray': isWeekend(date)
+          }">
+            </td>
+
+            <td class="calendar-body__cell cell-gray">SUMM</td>
+
+          </tr>
+
+        </ng-container>
         <!-- MEMBERS -->
-        <!-- <tr *ngFor="let member of members" class="calendar-body__member">
-          <td class="team team--member calendar-body__cell">
-            <span class="team__name">{{ member.name }}</span>
-          </td>
 
-          <!-- TEAM__CELL -->
-          <!-- <td *ngFor="let date of allDays" [ngClass]="{ -->
-            <!-- 'calendar-body__cell': true,  -->
-            <!-- 'cell-gray': isWeekend(date) -->
-          <!-- }"> -->
-          <!-- </td>  -->
-
-          <!-- <td class="calendar-body__cell cell-gray">SUMM</td> -->
-
-        <!-- </tr> -->
         <!-- {members.map(({ name: nameMember, vacations: arrayOfVacations }: IMember, day: number) => ( -->
         <!-- <TeamMember key={day} allDays={allDays} name={nameMember} vacations={arrayOfVacations} theme={mainTheme} -->
         <!-- isGroupOpen={isGroupOpen} /> -->
