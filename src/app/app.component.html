@@ -31,7 +31,10 @@
       <tbody class="calendar-body">
         <!-- TEAM -->
         <ng-container *ngFor="let team of teams; let i = index">
-          <tr class="calendar-body__team calendar-table--indentation">
+          <tr 
+            class='{{"calendar-body__team calendar-table--indentation " + THEMES[i % THEMES.length][0] + " " + THEMES[i % THEMES.length][1]}}'
+               
+          >
             <td class="team team--common">
               <span class="team__name">{{ team.name }}</span>
               <div class="team__other">
@@ -69,7 +72,7 @@
           }">
             </td>
 
-            <td class="calendar-body__cell cell-gray">SUMM</td>
+            <td class="calendar-body__cell cell-gray">4</td>
 
           </tr>
 
