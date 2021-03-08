@@ -29,9 +29,7 @@ export class AppComponent implements OnInit {
     })
 
     this.teams$ = this.dataService.getTeams().subscribe({
-      next: teams => {
-        this.teams = teams
-      },
+      next: teams => this.teams = teams,
       error: err => console.log('Custom Error', err)
     })
   }

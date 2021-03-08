@@ -5,7 +5,7 @@
     }
 
     .team {
-      border-left: 4px solid $themes-main;
+      border-left: 4px solid $themes-main !important;
 
       &__weekend-percent {
         background-color: $themes-main;

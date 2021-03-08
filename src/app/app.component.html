@@ -30,9 +30,9 @@
 
       <tbody class="calendar-body">
         <!-- TEAM -->
-        <ng-container *ngFor="let team of teams; let i = index">
+        <ng-container *ngFor="let team of teams; let teamIndex = index">
           <tr 
-            class='{{"calendar-body__team calendar-table--indentation " + THEMES[i % THEMES.length][0] + " " + THEMES[i % THEMES.length][1]}}'
+            class='{{"calendar-body__team calendar-table--indentation " + THEMES[teamIndex % THEMES.length][0] + " " + THEMES[teamIndex % THEMES.length][1]}}'
                
           >
             <td class="team team--common">
@@ -60,7 +60,7 @@
           </tr>
 
           <!-- MEMBER -->
-          <tr *ngFor="let member of team.members" class="calendar-body__member">
+          <tr *ngFor="let member of team.members; let memberIndex = index" class='{{"calendar-body__member "  + THEMES[teamIndex % THEMES.length][0]}}'>
             <td class="team team--member calendar-body__cell">
               <span class="team__name">{{ member.name }}</span>
             </td>
@@ -70,6 +70,18 @@
             'calendar-body__cell': true, 
             'cell-gray': isWeekend(date)
           }">
+          
+          <!-- { -->
+            <!-- (isPaidCell || isUnPaidCell) && <div className={classnames({ -->
+              <!-- "cell-vacations": true, -->
+              <!-- "cell-vacations--paid": isPaidCell, -->
+              <!-- "cell-vacations--unpaid": isUnPaidCell, -->
+              <!-- "cell-vacations--start-vac": isStartDay, -->
+              <!-- "cell-vacations--end-vac": isEndDay, -->
+              <!-- "cell-vacations--unpaid-start-vac": isUnPaidCell && isStartDay,  -->
+              <!-- "cell-vacations--unpaid-end-vac": isUnPaidCell && isEndDay -->
+            <!-- }) -->
+            <!-- }>Pd</div> } -->
             </td>
 
             <td class="calendar-body__cell cell-gray">4</td>
