@@ -1,0 +1,22 @@
+@import "mixin";
+:host {
+  display: contents;
+}
+
+.calendar-header {
+
+  &__cell {
+    span {
+      display: block;
+    }
+  }
+
+  
+  &__day {
+    font-weight: 400;
+  }
+
+  &__number {
+    @extend %font-bold;
+  }
+}
