@@ -1,8 +1,13 @@
 @import 'mixin';
 
-:host .calendar-nav {
-  margin: 0 auto 25px;  
+:host {
+  display: contents;
+
+  & .calendar-nav {
+    margin: 0 auto 25px;
+  }
 }
+
 
 .calendar-nav {
   display: flex;

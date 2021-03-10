@@ -1,0 +1,33 @@
+<tr
+class='{{"calendar-body__team calendar-table--indentation " + THEMES[teamIndex % THEMES.length][0] + " " + THEMES[teamIndex % THEMES.length][1]}}'>
+
+  <td class="team team--common">
+    <span class="team__name">{{ team?.name }}</span>
+    <div class="team__other">
+      <div class="team__users users">
+        <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
+        <span class="users__count">{{ team?.members?.length }}</span>
+      </div>
+      <div class="team__weekend-percent weekend-percent">{{ team && team.percentageOfAbsent &&
+        team.percentageOfAbsent[allDays[0].getMonth()] }}
+      </div>
+      <button class="button-arrow-up"></button>
+    </div>
+  </td>
+
+  <app-cells [allDays]="allDays"></app-cells>
+
+  <td class="calendar-body__cell cell-gray"></td>
+</tr>
+
+<!-- MEMBER -->
+<ng-container *ngFor="let member of team?.members; let memberIndex = index">
+  <app-member [member]="member" [allDays]="allDays"  [teamIndex]="teamIndex" ></app-member>
+</ng-container>
+
+<!-- MEMBERS -->
+
+<!-- {members.map(({ name: nameMember, vacations: arrayOfVacations }: IMember, day: number) => ( -->
+<!-- <TeamMember key={day} allDays={allDays} name={nameMember} vacations={arrayOfVacations} theme={mainTheme} -->
+<!-- isGroupOpen={isGroupOpen} /> -->
+<!-- ))} -->

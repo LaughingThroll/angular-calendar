@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 @import './variables';
+@import './themes';
 
 @import './sub_modules/button';
 @import './sub_modules/cells';
+@import './sub_modules/users';
+@import './sub_modules/weekend-percent';
 
 html {
   box-sizing: border-box;
@@ -92,3 +95,6 @@ h5 {
   font-size: 14px;
   font-weight: 600;
 }
+
+
+@import "./modules/calendar-table";

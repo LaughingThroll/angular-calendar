@@ -1,0 +1,20 @@
+<ng-container *ngIf="th; else bodyCell">
+  <th *ngFor="let date of allDays" [ngClass]="{
+    'calendar-header__cell': true, 
+    'cell-gray': isWeekend(date)
+}">
+    <span class="calendar-header__day">{{ date | date:"EEEEEE" }}</span>
+    <span class="calendar-header__number">{{ date | date:"d" }}</span>
+  </th>
+</ng-container>
+
+<ng-template #bodyCell>
+  <td *ngFor="let date of allDays" [ngClass]="{
+    'calendar-body__cell': true, 
+    'cell-gray': isWeekend(date)
+  }">
+  <!-- <div class="cell-vacations"> -->
+    <!-- Pd -->
+  <!-- </div> -->
+  </td>
+</ng-template>

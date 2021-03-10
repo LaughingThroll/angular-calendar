@@ -1,0 +1,20 @@
+@import 'mixin';
+
+:host {
+  display: contents;
+}
+
+.team {
+  padding: 7px 5px 7px 19px;
+  &--member {
+    .team__name {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.calendar-body__cell:last-child {
+  @extend %font-bold;
+
+  text-align: center;
+} 

@@ -1,0 +1,48 @@
+@mixin themes($themes-name, $themes-main, $themes-bg, $themes-text-color) {
+  .#{$themes-name} {
+    &.#{$themes-name}--background {
+      background-color: $themes-bg;
+    }
+
+    .team {
+      border-left: 4px solid $themes-main !important;
+
+      &__weekend-percent {
+        background-color: $themes-main;
+        color: $themes-text-color;
+      }
+    }
+
+    .cell-vacations {
+      &--paid,
+      &--unpaid {
+        &::before {
+          background-color: inherit;
+        }
+      }
+      &--paid {
+        color: $themes-text-color;
+        background-color: $themes-main;
+      }
+      &--unpaid {
+        border-top: 1px solid $themes-main;
+        border-bottom: 1px solid $themes-main;
+        background-color: #{$themes-main + "19"};
+        color: $themes-main;
+        &-start-vac {
+          border-left: 1px solid $themes-main;
+        }
+        &-end-vac {
+          border-right: 1px solid $themes-main;
+        }
+      }
+
+      
+    }
+  }
+}
+
+@include themes(melrose-theme, $melrose, $melrose-bg, $white);
+@include themes(malibu-theme, $malibu, $malibu-bg, $white);
+@include themes(mona-lisa-theme, $mona-lisa, $mona-lisa-bg, $white);
+@include themes(atomic-tangerine-theme, $atomic-tangerine, $atomic-tangerine-bg, $white);
