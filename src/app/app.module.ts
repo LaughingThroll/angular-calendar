@@ -8,7 +8,8 @@ import { CalendarNavigationComponent } from './components/calendar-navigation/ca
 import { CalendarHeaderComponent } from './components/calendar-header/calendar-header.component'
 import { CalendarBodyComponent } from './components/calendar-body/calendar-body.component'
 import { CellsComponent } from './components/cells/cells.component';
-import { TeamComponent } from './components/team/team.component'
+import { TeamComponent } from './components/team/team.component';
+import { MemberComponent } from './components/member/member.component'
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { TeamComponent } from './components/team/team.component'
     CalendarHeaderComponent,
     CalendarBodyComponent,
     CellsComponent,
-    TeamComponent
+    TeamComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,
