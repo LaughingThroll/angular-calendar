@@ -1,9 +1,32 @@
-@import 'variables';
-@import 'mixin';
+@import "variables";
+@import "mixin";
 
-.calendar {
-  padding-top: 35px;
-  padding-bottom: 35px;
+.summary {
+  @extend %font-reg;
+  max-width: 230px;
+  width: 100%;
+  &__title {
+    font-weight: 600;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid $mercury;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+  &__users {
+    margin-left: auto;
+    margin-right: 15px;
+    color: $black;
+  }
+
+  &__weekend-percent {
+    background-color: $apple;
+    color: $white;
+    min-width: 42px;
+  }
 }
 
 

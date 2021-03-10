@@ -1,1 +1,1 @@
-export type TThemes = [string, string]
+export type TTheme = [string, string]

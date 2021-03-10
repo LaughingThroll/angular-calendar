@@ -1,10 +1,6 @@
 $vac-border-radius: 3px;
 $vac-padding: 2px;
 
-.cell-gray {
-  background-color: $weekend;
-}
-
 .cell-vacations {
   position: relative;
   text-align: center;
@@ -57,4 +53,8 @@ $vac-padding: 2px;
   &::before {
     display: none;
   }
+}
+
+.cell-gray {
+  background-color: $weekend;
 }

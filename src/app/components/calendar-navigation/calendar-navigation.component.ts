@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DateService } from './../../services/date/date.service'
+import { DateService } from '../../services/date/date.service'
 
 @Component({
   selector: 'app-calendar-navigation',

@@ -4,9 +4,12 @@
       background-color: $themes-bg;
     }
 
-    .team {
+    .team,
+    .member {
       border-left: 4px solid $themes-main !important;
+    } 
 
+    .team {
       &__weekend-percent {
         background-color: $themes-main;
         color: $themes-text-color;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Subscription } from 'rxjs'
 
 import { DateService } from './services/date/date.service'
-import { DataService } from './services/data/data.service'
+import { TeamsService } from './services/teams/teams.service'
  
 import { ITeam } from './interfaces/DB'
 
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private dateSevice: DateService, 
-    private dataService: DataService
+    private teamsService: TeamsService
     ) { }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
       }
     })
 
-    this.teams$ = this.dataService.getTeams().subscribe({
+    this.teams$ = this.teamsService.getTeams().subscribe({
       next: teams => this.teams = teams,
       error: err => console.log('Custom Error', err)
     })

@@ -97,4 +97,11 @@ h5 {
 }
 
 
-@import "./modules/calendar-table";
+.calendar {
+  padding-top: 35px;
+  padding-bottom: 35px;
+
+  &__summary {
+    margin-top: 29px;
+  }
+}
