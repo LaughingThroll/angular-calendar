@@ -6,17 +6,7 @@
 
     <app-calendar-table [allDays]="allDays" [teams]="teams"></app-calendar-table>
     
-    <div class="calendar__summary summary">
-      <div class="summary__title">September teams Summary</div>
-      <div class="summary__inner">
-        <div class="summary__text">On vacation</div>
-        <div class="summary__users users">
-          <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
-          <span class="users__count">15</span>
-        </div>
-        <div class="summary__weekend-percent weekend-percent">12%</div>
-      </div>
-    </div> 
+    <app-calendar-summary [date]="date" [teams]="teams"></app-calendar-summary> 
 
   </div>
 

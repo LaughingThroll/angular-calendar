@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 @import './variables';
-@import './themes';
 
 @import './sub_modules/button';
 @import './sub_modules/cells';
@@ -105,3 +104,5 @@ h5 {
     margin-top: 29px;
   }
 }
+
+@import './themes';

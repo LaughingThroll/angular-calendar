@@ -6,12 +6,10 @@ import { switchMap, catchError } from 'rxjs/operators'
 import departmentTeams from '../../api/DB'
 import { IDepartmentTeams, ITeam, ICustomOptionsForPUT } from 'src/app/interfaces/DB'
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
-  
   public TEAMS_URL: string = "https://jsonplaceholder.typicode.com/posts/1"
   
   public OPTIONS_FOR_PUT_REQUEST: ICustomOptionsForPUT = {
