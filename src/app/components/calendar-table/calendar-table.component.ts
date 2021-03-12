@@ -25,8 +25,6 @@ export class CalendarTableComponent {
 
   @Input() teams: ITeam[] = []
   @Input() allDays: Date[] = []
-  @Output() vacation: EventEmitter<IVacation[]> = new EventEmitter<IVacation[]>()
-
 
   constructor(
     private dateService: DateService,
@@ -60,5 +58,4 @@ export class CalendarTableComponent {
 
   getTheme = (index: number): TTheme => THEMES[index % THEMES.length]
   isWeekend = (date: Date): boolean => this.dateService.isWeekend(date)
-
 }

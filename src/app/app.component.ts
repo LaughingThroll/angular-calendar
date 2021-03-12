@@ -15,9 +15,7 @@ export class AppComponent implements OnInit {
 
   public date: Date = new Date() 
   public allDays: Date[] = []
-  public teams: ITeam[] = [] 
-  public date$?: Subscription
-  public teams$?: Subscription 
+  public teams: ITeam[] = []  
 
   constructor(
     private dateSevice: DateService, 
@@ -25,21 +23,28 @@ export class AppComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.date$ = this.dateSevice.getDate().subscribe({
+    this.subscriberDate()
+    this.subscriberTeams() 
+  }
+
+  subscriberDate(): Subscription {
+    return this.dateSevice.getDate().subscribe({
       next: date => {
         this.date = date
         this.allDays = this.dateSevice.getAllDayInMonth(date)
       }
     })
+  }
 
-    this.teams$ = this.teamsService.getTeams().subscribe({
+  subscriberTeams(): Subscription {
+    return this.teamsService.getTeams().subscribe({
       next: teams => this.teams = teams,
       error: err => console.log('Custom Error', err)
     })
   }
 
   ngOnDestroy(): void {
-    this.date$?.unsubscribe()
-    this.teams$?.unsubscribe()
+    this.subscriberDate().unsubscribe()
+    this.subscriberTeams().unsubscribe()
   }
 }

@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, Observable } from 'rxjs'
+
 import { createArrayFromNumber } from '../../utils/array'
 import { daysInMonth } from '../../utils/date'
 
@@ -24,4 +25,7 @@ export class DateService {
   }
 
   isWeekend = (date: Date): boolean => date.getDay() === 6 || date.getDay() === 0 
+
+  formatDate = (arr: string[], separator: string = '.'): string => arr.reverse().join(separator)
+
 }
