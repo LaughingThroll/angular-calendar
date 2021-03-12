@@ -1,0 +1,89 @@
+<table class="calendar-table">
+
+  <thead class="calendar-header">
+    <tr class="calendar-header__row">
+      <th class="calendar-header__cell">
+        <!-- CLICK OPEN_MODAL -->
+        <button class="button button--icon-plus button--primary">Add vacation</button>
+      </th>
+
+      <th *ngFor="let date of allDays" [ngClass]="{
+        'calendar-header__cell': true, 
+        'cell-gray': isWeekend(date)
+    }">
+        <span class="calendar-header__day">{{ date | date:"EEEEEE" }}</span>
+        <span class="calendar-header__number">{{ date | date:"d" }}</span>
+      </th>
+
+      <th class="calendar-header__cell cell-gray"> Sum </th>
+    </tr>
+  </thead>
+
+
+  <tbody class="calendar-body">
+    <ng-container *ngFor="let team of teams; let teamIndex = index">
+      <tr [class]="'calendar-body__team calendar-table--indentation ' + [ this.getTheme(teamIndex)[0], this.getTheme(teamIndex)[1] ].join(' ') ">
+
+        <td class="team">
+          <span class="team__name">{{ team.name }}</span>
+          <div class="team__other">
+            <div class="team__users users">
+              <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
+              <span class="users__count">{{ team.members.length }}</span>
+            </div>
+            <div class="team__weekend-percent weekend-percent">{{ team.percentageOfAbsent[allDays[0].getMonth()] }}%</div>
+            <button class="button-arrow-up"></button>
+          </div>
+        </td>
+
+        <td *ngFor="let date of allDays" [ngClass]="{
+          'calendar-body__cell': false, 
+          'cell-gray': isWeekend(date)
+        }">
+        </td>
+
+        <td class="calendar-body__cell cell-gray"></td>
+      </tr>
+
+      <tr *ngFor="let member of team.members" class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
+        <td class="member calendar-body__cell">
+          <span class="member__name">{{ member.name }}</span>
+        </td>
+      
+        <td *ngFor="let date of allDays" [ngClass]="{
+          'calendar-body__cell': true, 
+          'cell-gray': isWeekend(date)
+        }">
+        </td>
+        <!-- { -->
+        <!-- (isPaidCell || isUnPaidCell) && <div className={classnames({ -->
+        <!-- "cell-vacations": true, -->
+        <!-- "cell-vacations--paid": isPaidCell, -->
+        <!-- "cell-vacations--unpaid": isUnPaidCell, -->
+        <!-- "cell-vacations--start-vac": isStartDay, -->
+        <!-- "cell-vacations--end-vac": isEndDay, -->
+        <!-- "cell-vacations--unpaid-start-vac": isUnPaidCell && isStartDay,  -->
+        <!-- "cell-vacations--unpaid-end-vac": isUnPaidCell && isEndDay -->
+        <!-- }) -->
+        <!-- }>Pd</div> } -->
+      
+        <td class="cell-summ calendar-body__cell cell-gray">4</td>
+      
+      </tr>
+
+    </ng-container>
+  </tbody>
+
+  <tfoot class="calendar-footer calendar-table--indentation">
+    <tr class="calendar-footer__row">
+      <td class="calendar-footer__cell cell-gray">Day-Person-Stats</td>
+      <td *ngFor="let date of allDays" [ngClass]="{
+        'cell-summ': true, 
+        'calendar-footer__cell': true, 
+        'cell-gray': isWeekend(date) 
+      }">4</td>
+      <td class="calendar-footer__cell cell-gray"></td>
+    </tr>
+  </tfoot>
+
+</table>
