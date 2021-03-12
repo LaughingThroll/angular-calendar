@@ -46,6 +46,9 @@
       </tr>
 
       <tr *ngFor="let member of team.members" class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
+        <!-- Что то нужно с этим придумать -->
+        {{ splitVacations(member.vacations) }}
+
         <td class="member calendar-body__cell">
           <span class="member__name">{{ member.name }}</span>
         </td>
@@ -54,18 +57,19 @@
           'calendar-body__cell': true, 
           'cell-gray': isWeekend(date)
         }">
+
+        <div *ngIf="isPaidCell(date) || isUnPaidCell(date)" 
+        [ngClass]="{
+          'cell-vacations': true,
+          'cell-vacations--paid': isPaidCellVariables,
+          'cell-vacations--unpaid': isUnPaidCellVariables,
+          'cell-vacations--start-vac': isStartDay(date),
+          'cell-vacations--end-vac': isEndDay(date),
+          'cell-vacations--unpaid-start-vac': isUnPaidCellVariables && isStartDayVariables,
+          'cell-vacations--unpaid-end-vac': isUnPaidCellVariables && isEndDayVariables
+        }">Pd</div>
+
         </td>
-        <!-- { -->
-        <!-- (isPaidCell || isUnPaidCell) && <div className={classnames({ -->
-        <!-- "cell-vacations": true, -->
-        <!-- "cell-vacations--paid": isPaidCell, -->
-        <!-- "cell-vacations--unpaid": isUnPaidCell, -->
-        <!-- "cell-vacations--start-vac": isStartDay, -->
-        <!-- "cell-vacations--end-vac": isEndDay, -->
-        <!-- "cell-vacations--unpaid-start-vac": isUnPaidCell && isStartDay,  -->
-        <!-- "cell-vacations--unpaid-end-vac": isUnPaidCell && isEndDay -->
-        <!-- }) -->
-        <!-- }>Pd</div> } -->
       
         <td class="cell-summ calendar-body__cell cell-gray">4</td>
       

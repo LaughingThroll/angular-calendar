@@ -107,14 +107,6 @@ $pseudo-border: 0.5px;
   }
 }
 
-
-.cell-summ {
-  @extend %font-bold;
-
-  text-align: center;
-}
-
-
 .calendar-footer {  
   &__cell {
     border-bottom: 0 !important;
@@ -128,3 +120,10 @@ $pseudo-border: 0.5px;
     }
   }
 }
+
+.cell-summ {
+  @extend %font-bold;
+
+  text-align: center;
+}
+
