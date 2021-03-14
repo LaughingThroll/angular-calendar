@@ -49,7 +49,7 @@ export class CalendarTableComponent {
   isStartDay(date: Date): boolean {
     this.isStartDayVariables = this.vacationsService.isFirstOrLastDay(this.newVacations, date, "start")
     return this.isStartDayVariables
-  } 
+  }
 
   isEndDay(date: Date): boolean {
     this.isEndDayVariables = this.vacationsService.isFirstOrLastDay(this.newVacations, date, "end")
@@ -57,8 +57,21 @@ export class CalendarTableComponent {
   }
 
   sumVacationsDaysByMonth(): number {
+    // TODO refactoring
     return this.vacationsService.sumVacationsDays(this.newVacations, this.allDays[1])
   }
+
+  sumVacationsDaysByDay(date: Date): number {
+    // TODO refactoring
+    const vacations = this.teams.flatMap(({ members }) => members).flatMap(({ vacations }) => vacations)
+    const newVacations = this.vacationsService.splitVacations(vacations, this.dateService.daysInMonth(this.allDays[1]))
+    const filteredVacations = this.vacationsService.filterVacationsDateByMonth(newVacations, this.allDays[1])
+
+    return filteredVacations.reduce((acc, { startDate, endDate }) => {
+      return date.getDate() >= +startDate.split('.')[0] && date.getDate() <= +endDate.split('.')[0] ? acc += 1 : acc
+    }, 0)
+  }
+
   getTheme = (index: number): TTheme => THEMES[index % THEMES.length]
   isWeekend = (date: Date): boolean => this.dateService.isWeekend(date)
 }

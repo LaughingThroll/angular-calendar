@@ -68,7 +68,7 @@ export class VacationsService {
 
     return filteredArray.reduce((acc, { startDate, endDate }) => {
       const diff = Date.parse(formatDate(endDate.split(separator))) - Date.parse(formatDate(startDate.split(separator)))
-      return (acc += countDayFromTimeStamp(diff))
+      return acc += countDayFromTimeStamp(diff)
     }, 0)
   }
 }
