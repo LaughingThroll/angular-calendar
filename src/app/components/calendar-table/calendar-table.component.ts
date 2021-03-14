@@ -56,6 +56,9 @@ export class CalendarTableComponent {
     return this.isEndDayVariables
   }
 
+  sumVacationsDaysByMonth(): number {
+    return this.vacationsService.sumVacationsDays(this.newVacations, this.allDays[1])
+  }
   getTheme = (index: number): TTheme => THEMES[index % THEMES.length]
   isWeekend = (date: Date): boolean => this.dateService.isWeekend(date)
 }
