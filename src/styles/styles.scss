@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import './variables';
+
+@import './sub_modules/button';
+@import './sub_modules/cells';
+@import './sub_modules/users';
+@import './sub_modules/weekend-percent';
+
+html {
+  box-sizing: border-box;
+  font-size: $main-fz;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $main-font;
+  color: $main-color;
+  line-height: $main-line-height;
+}
+
+// start reset CSS
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+
+input,
+button,
+textarea,
+select {
+  border: none;
+}
+
+button {
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+textarea {
+  resize: none;
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 $main-padding;
+  max-width: $main-width;
+}
+
+h4,
+h5 {
+  line-height: 22px;
+}
+h4 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.calendar {
+  padding-top: 35px;
+  padding-bottom: 35px;
+
+  &__summary {
+    margin-top: 29px;
+  }
+}
+
+@import './themes';

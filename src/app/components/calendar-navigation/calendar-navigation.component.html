@@ -1,0 +1,5 @@
+<div class="calendar-nav">
+  <button class="calendar-nav__btn calendar-nav__btn--prev-month" (click)="changeDate(-1)"></button>
+  <div class="calendar-nav__current-date">{{ date | date:"MMMM YYYY" }}</div>
+  <button class="calendar-nav__btn calendar-nav__btn--next-month" (click)="changeDate(1)"></button>
+</div>
