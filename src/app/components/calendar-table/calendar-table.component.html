@@ -46,7 +46,7 @@
       </tr>
 
       <tr *ngFor="let member of team.members" class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
-        <!-- Что то нужно с этим придумать -->
+        <!-- TODO refactoring  Что то нужно с этим придумать -->
         {{ splitVacations(member.vacations) }}
 
         <td class="member calendar-body__cell">
@@ -71,7 +71,7 @@
 
         </td>
       
-        <td class="cell-summ calendar-body__cell cell-gray">4</td>
+        <td class="cell-summ calendar-body__cell cell-gray">{{ sumVacationsDaysByMonth() }}</td>
       
       </tr>
 
@@ -85,7 +85,7 @@
         'cell-summ': true, 
         'calendar-footer__cell': true, 
         'cell-gray': isWeekend(date) 
-      }">4</td>
+      }">{{ sumVacationsDaysByDay(date) }}</td>
       <td class="calendar-footer__cell cell-gray"></td>
     </tr>
   </tfoot>
