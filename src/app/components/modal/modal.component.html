@@ -1,0 +1,71 @@
+<div class="modal-header">
+  <h4 class="modal-header__title" mat-dialog-title>Vacation Request</h4>
+  <div class="modal-header__days">countDays Days</div>
+</div>
+
+<mat-dialog-content>
+
+  <form class="modal-body">
+    <div class="modal-body__item">
+      <div class="form-dates">
+        <h5 class="form-dates__title">Team</h5>
+        <div class="form-dates__inner">
+          <label class="input-date">From <input class="input-date__field" type="date" />
+          </label>
+          <label class="input-date">To <input class="input-date__field" type="date" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body__item">
+      <div class="form-dates">
+        <h5 class="form-dates__title">Team</h5>
+        <div class="select">
+          <select class="select__main">
+            <option class="select__option">Options</option>
+            <option class="select__option">Options</option>
+            <option class="select__option">Options</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="modal-body__item">
+      <div class="form-dates">
+        <h5 class="form-dates__title">User</h5>
+        <div class="select">
+          <select class="select__main">
+            <option class="select__option">Options</option>
+            <option class="select__option">Options</option>
+            <option class="select__option">Options</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body__item">
+      <div class="form-dates">
+        <h5 class="form-dates__title">Vacations Day</h5>
+        <div class="select">
+          <select class="select__main">
+            <option class="select__option">Options</option>
+            <option class="select__option">Options</option>
+            <option class="select__option">Options</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+  <div class="modal-footer">
+    <button class="button button--secondary" mat-dialog-close>Cancel</button>
+    <button type="submit" class="button button--primary">Send</button>
+  </div>
+</mat-dialog-actions>
