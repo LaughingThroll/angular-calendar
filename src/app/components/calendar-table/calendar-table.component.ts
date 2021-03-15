@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 
 import { THEMES } from 'src/app/constant'
 
@@ -6,6 +7,7 @@ import { ITeam, IVacation } from 'src/app/interfaces/DB'
 import { TTheme } from 'src/app/interfaces/utils'
 import { DateService } from 'src/app/services/date/date.service'
 import { VacationsService } from 'src/app/services/vacations/vacations.service'
+import { ModalComponent } from '../modal/modal.component'
 
 
 @Component({
@@ -28,10 +30,13 @@ export class CalendarTableComponent {
 
   constructor(
     private dateService: DateService,
-    private vacationsService: VacationsService
-  ) { }
+    private vacationsService: VacationsService,
+    private dialog: MatDialog
+    ) { }
 
-
+  openModal() {
+    this.dialog.open(ModalComponent)
+  }
   splitVacations(vacations: IVacation[]): void {
     this.newVacations = this.vacationsService.splitVacations(vacations, this.allDays.length)
   }
