@@ -3,11 +3,16 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { THEMES } from 'src/app/constant'
 
-import { ITeam, IVacation } from 'src/app/interfaces/DB'
-import { TTheme } from 'src/app/interfaces/utils'
 import { DateService } from 'src/app/services/date/date.service'
 import { VacationsService } from 'src/app/services/vacations/vacations.service'
 import { ModalComponent } from '../modal/modal.component'
+
+import { IVacation } from 'src/app/interfaces/vacation'
+import { ITeam } from 'src/app/interfaces/team'
+import { TTheme } from 'src/app/interfaces/theme'
+import { VacationEnum } from 'src/app/interfaces/enums'
+
+
 
 
 @Component({
@@ -42,12 +47,12 @@ export class CalendarTableComponent {
   }
 
   isPaidCell(date: Date): boolean {
-    this.isPaidCellVariables = this.vacationsService.exsistTypeVacation(this.newVacations, date, "Paid")
+    this.isPaidCellVariables = this.vacationsService.exsistTypeVacation(this.newVacations, date, VacationEnum.PAID)
     return this.isPaidCellVariables
   }
 
   isUnPaidCell(date: Date): boolean {
-    this.isUnPaidCellVariables = this.vacationsService.exsistTypeVacation(this.newVacations, date, "UnPaid")
+    this.isUnPaidCellVariables = this.vacationsService.exsistTypeVacation(this.newVacations, date, VacationEnum.UNPAID)
     return this.isUnPaidCellVariables
   }
 
@@ -69,7 +74,7 @@ export class CalendarTableComponent {
   sumVacationsDaysByDay(date: Date): number {
     // TODO refactoring
     const vacations = this.teams.flatMap(({ members }) => members).flatMap(({ vacations }) => vacations)
-    const newVacations = this.vacationsService.splitVacations(vacations, this.dateService.daysInMonth(this.allDays[1]))
+    const newVacations = this.vacationsService.splitVacations(vacations, this.dateService.lastDayInMonth(this.allDays[1]))
     const filteredVacations = this.vacationsService.filterVacationsDateByMonth(newVacations, this.allDays[1])
 
     return filteredVacations.reduce((acc, { startDate, endDate }) => {
@@ -77,6 +82,10 @@ export class CalendarTableComponent {
     }, 0)
   }
 
-  getTheme = (index: number): TTheme => THEMES[index % THEMES.length]
-  isWeekend = (date: Date): boolean => this.dateService.isWeekend(date)
+  getTheme(index: number): TTheme {
+    return THEMES[index % THEMES.length]
+  } 
+  isWeekend(date: Date): boolean {
+    return this.dateService.isWeekend(date)
+  } 
 }
