@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs'
 import { DateService } from './services/date/date.service'
 import { TeamsService } from './services/teams/teams.service'
  
-import { ITeam } from './interfaces/DB'
+import { ITeam } from './interfaces/team'
 
 @Component({
   selector: 'app-root',

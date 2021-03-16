@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 
-import { ITeam } from '../../interfaces/DB'
+import { ITeam } from '../../interfaces/team'
 
 @Component({
   selector: 'app-calendar-summary',

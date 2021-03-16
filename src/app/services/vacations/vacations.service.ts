@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { IVacation, TVacation } from 'src/app/interfaces/DB'
+import { IVacation } from 'src/app/interfaces/vacation'
+import { VacationEnum } from 'src/app/interfaces/enums'
 import { DateService } from '../date/date.service'
 
 @Injectable({
@@ -38,7 +39,7 @@ export class VacationsService {
     })
   }
 
-  exsistTypeVacation = (vacations: IVacation[], cellDate: Date, type: TVacation = "Paid"): boolean => {
+  exsistTypeVacation = (vacations: IVacation[], cellDate: Date, type: VacationEnum.PAID | VacationEnum.UNPAID = VacationEnum.PAID): boolean => {
     return vacations
       .map(({ startDate, endDate, type }) => (this.checkVacation(cellDate, startDate, endDate) ? type : null))
       .some(el => el === type)
