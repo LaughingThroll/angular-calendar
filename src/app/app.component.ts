@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs'
 
 import { DateService } from './services/date/date.service'
 import { TeamsService } from './services/teams/teams.service'
+
+import DateUtils from './utils/DateUtils'
  
 import { ITeam } from './interfaces/team'
 
@@ -31,7 +33,7 @@ export class AppComponent implements OnInit {
     return this.dateSevice.getDate().subscribe({
       next: date => {
         this.date = date
-        this.allDays = this.dateSevice.getAllDayInMonth(date)
+        this.allDays = DateUtils.getAllDayInMonth(date)
       }
     })
   }
