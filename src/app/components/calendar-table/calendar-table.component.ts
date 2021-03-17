@@ -6,26 +6,26 @@ import { THEMES } from 'src/app/constant'
 
 import VacationsUtils from '../../utils/VacationsUtils'
 import DateUtils from 'src/app/utils/DateUtils'
+import TeamUtils from 'src/app/utils/TeamUtils'
 
 import { IVacation } from 'src/app/interfaces/vacation'
 import { ITeam } from 'src/app/interfaces/team'
 import { TTheme } from 'src/app/interfaces/theme'
 import { VacationEnum } from 'src/app/interfaces/enums'
 
+
 @Component({
   selector: 'app-calendar-table',
   templateUrl: './calendar-table.component.html',
   styleUrls: ['./calendar-table.component.scss']
 })
-export class CalendarTableComponent {
-
-  public THEMES: TTheme[] = THEMES
+export class CalendarTableComponent {  
+  // TODO Need refactoring getSplitVacations in every methods 
+  
   public isPaidCellVariables: boolean = false
   public isUnPaidCellVariables: boolean = false
   public isStartDayVariables: boolean = false
   public isEndDayVariables: boolean = false
-  private newVacations: IVacation[] = []
-
 
   @Input() teams: ITeam[] = []
   @Input() allDays: Date[] = []
@@ -36,51 +36,51 @@ export class CalendarTableComponent {
     this.dialog.open(ModalComponent)
   }
 
-  splitVacations(vacations: IVacation[]): void {
-    this.newVacations = VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+  isWeekend(date: Date): boolean {
+    return DateUtils.isWeekend(date)
   }
 
-  isPaidCell(date: Date): boolean {
-    this.isPaidCellVariables = VacationsUtils.getExsistingTypeVacation(this.newVacations, date, VacationEnum.PAID)
+  isPaidCell(vacations: IVacation[], index: number): boolean {
+    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+    this.isPaidCellVariables = VacationsUtils.getExsistingTypeVacation(newVacations, this.allDays[index], VacationEnum.PAID)
     return this.isPaidCellVariables
   }
 
-  isUnPaidCell(date: Date): boolean {
-    this.isUnPaidCellVariables = VacationsUtils.getExsistingTypeVacation(this.newVacations, date, VacationEnum.UNPAID)
+  isUnPaidCell(vacations: IVacation[], index: number): boolean {
+    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+    this.isUnPaidCellVariables = VacationsUtils.getExsistingTypeVacation(newVacations, this.allDays[index], VacationEnum.UNPAID)
     return this.isUnPaidCellVariables
   }
 
-  isStartDay(date: Date): boolean {
-    this.isStartDayVariables = VacationsUtils.getIsFirstDay(this.newVacations, date)
+   isStartDay(vacations: IVacation[], index: number): boolean {
+    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+    this.isStartDayVariables = VacationsUtils.isFirstDay(newVacations, this.allDays[index])
     return this.isStartDayVariables
   }
 
-  isEndDay(date: Date): boolean {
-    this.isEndDayVariables = VacationsUtils.getIsLastDay(this.newVacations, date)
+  isEndDay(vacations: IVacation[], index: number): boolean {
+    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+    this.isEndDayVariables = VacationsUtils.isLastDay(newVacations, this.allDays[index])
     return this.isEndDayVariables
   }
 
-  sumVacationsDaysByMonth(): number {
-    // TODO refactoring
-    return VacationsUtils.getSumVacationsDays(this.newVacations, this.allDays[1])
+  getSumVacationsDaysByMonth(vacations: IVacation[]): number {
+    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+    return VacationsUtils.getSumVacationsDaysByMonth(newVacations, this.allDays[1])
   }
 
-  sumVacationsDaysByDay(date: Date): number {
-    // TODO refactoring
+  getSumVacationsDaysByDay(index: number): number {
     const vacations = this.teams.flatMap(({ members }) => members).flatMap(({ vacations }) => vacations)
-    const newVacations = VacationsUtils.getSplitVacations(vacations, DateUtils.lastDayInMonth(this.allDays[1]))
-    const filteredVacations = VacationsUtils.getFilteredVacationsByMonth(newVacations, this.allDays[1])
-
-    return filteredVacations.reduce((acc, { startDate, endDate }) => {
-      return date.getDate() >= +startDate.split('.')[0] && date.getDate() <= +endDate.split('.')[0] ? acc += 1 : acc
-    }, 0)
+    const newVacations = VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+    return VacationsUtils.getSumVacationsDaysByDay(newVacations, this.allDays[index])
   }
 
   getTheme(index: number): TTheme {
     return THEMES[index % THEMES.length]
   }
 
-  isWeekend(date: Date): boolean {
-    return DateUtils.isWeekend(date)
-  } 
+  getPercentageOfAbsentCount(team: ITeam): number {
+    return TeamUtils.getPercentageOfAbsentCount(team, this.allDays[0])
+  }
+   
 }
