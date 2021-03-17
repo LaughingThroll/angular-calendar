@@ -49,9 +49,7 @@ export class AppComponent implements OnInit {
     this.teamsService.getTeams()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
-        next: teams => {
-          this.teams = teams
-        },
+        next: teams => this.teams = teams,
         error: err => {
           throw new Error('Как то неполучилось обработать запрос !!!' + err)
         }
