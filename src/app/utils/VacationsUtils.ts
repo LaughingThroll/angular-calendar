@@ -44,12 +44,12 @@ export default class VacationsUtils {
       .some(el => el === type)
   }
 
-  static getIsFirstDay(vacations: IVacation[], date: Date): boolean {
+  static isFirstDay(vacations: IVacation[], date: Date): boolean {
     return vacations.map(({ startDate }) => this.getCheckedDay(date, startDate.split(".")))
       .some(Boolean)
   }
 
-  static getIsLastDay(vacations: IVacation[], date: Date): boolean {
+  static isLastDay(vacations: IVacation[], date: Date): boolean {
     return vacations.map(({endDate}) => this.getCheckedDay(date, endDate.split(".")))
       .some(Boolean)
   }
@@ -57,12 +57,11 @@ export default class VacationsUtils {
   static getFilteredVacationsByMonth(vacations: IVacation[], cellDate: Date, separator: string = '.'): IVacation[] {
     return vacations.filter(({ startDate }) => {
       const startDateArr = startDate.split(separator)
-      const currentDateArr = DateUtils.formatDateInKebabCase(cellDate).split("-").reverse()
-      return +startDateArr[1] === +currentDateArr[1] && +startDateArr[2] === +currentDateArr[2]
+      return cellDate.getMonth() + 1 === +startDateArr[1] && cellDate.getFullYear() === +startDateArr[2] 
     })
   }
 
-  static getSumVacationsDays(vacations: IVacation[], cellDate: Date, separator: string = '.'): number {
+  static getSumVacationsDaysByMonth(vacations: IVacation[], cellDate: Date, separator: string = '.'): number {
     const filteredArray = this.getFilteredVacationsByMonth(vacations, cellDate)
     const { reverseDate, countDayFromTimeStamp } = DateUtils
 
@@ -72,4 +71,10 @@ export default class VacationsUtils {
     }, 0)
   }
 
+  static getSumVacationsDaysByDay(vacations: IVacation[], cellDate: Date): number {
+    const filteredVacations = this.getFilteredVacationsByMonth(vacations, cellDate)
+    return filteredVacations.reduce((acc, { startDate, endDate }) => {
+      return cellDate.getDate() >= +startDate.split('.')[0] && cellDate.getDate() <= +endDate.split('.')[0] ? acc += 1 : acc
+    }, 0)
+  }
 }
