@@ -6,7 +6,6 @@ import { THEMES } from 'src/app/constant'
 
 import VacationsUtils from '../../utils/VacationsUtils'
 import DateUtils from 'src/app/utils/DateUtils'
-import TeamUtils from 'src/app/utils/TeamUtils'
 
 import { IVacation } from 'src/app/interfaces/vacation'
 import { ITeam } from 'src/app/interfaces/team'
@@ -78,9 +77,4 @@ export class CalendarTableComponent {
   getTheme(index: number): TTheme {
     return THEMES[index % THEMES.length]
   }
-
-  getPercentageOfAbsentCount(team: ITeam): number {
-    return TeamUtils.getPercentageOfAbsentCount(team, this.allDays[0])
-  }
-   
 }

@@ -24,16 +24,8 @@
     <ng-container *ngFor="let team of teams; let teamIndex = index">
       <tr [class]="'calendar-body__team calendar-table--indentation ' + [ this.getTheme(teamIndex)[0], this.getTheme(teamIndex)[1] ].join(' ') ">
 
-        <td class="team">
-          <span class="team__name">{{ team.name }}</span>
-          <div class="team__other">
-            <div class="team__users users">
-              <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
-              <span class="users__count">{{ team.members.length }}</span>
-            </div>
-            <div class="team__weekend-percent weekend-percent">{{ getPercentageOfAbsentCount(team)  }}%</div>
-            <button class="button-arrow-up"></button>
-          </div>
+        <td class="calendar-body__cell calendar-body__cell--team">
+          <app-team [team]="team" [allDays]="allDays"> </app-team>
         </td>
 
         <td *ngFor="let date of allDays" [ngClass]="{
@@ -46,7 +38,8 @@
       </tr>
 
       <tr *ngFor="let member of team.members" class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
-        <td class="member calendar-body__cell">
+        <td class="calendar-body__cell calendar-body__cell--member member">
+          
           <span class="member__name">{{ member.name }}</span>
         </td>
       
