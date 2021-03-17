@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import TeamUtils from 'src/app/utils/TeamUtils';
 
-import { ITeam } from '../../interfaces/DB'
+import { ITeam } from '../../interfaces/team'
 
 @Component({
   selector: 'app-calendar-summary',
@@ -18,7 +19,16 @@ export class CalendarSummaryComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-    this.countUsers = this.teams.reduce((acc, team) => acc += team.members.length, 0)
-    this.percent = this.teams.reduce((acc, team) => acc += team.percentageOfAbsent[this.date.getMonth()], 0)
+    this.countUsers = this.getCountUsers(this.teams)
+    this.percent = this.getPercent(this.teams, this.date)
+
+  }
+
+  getCountUsers(teams: ITeam[]): number {
+    return teams.reduce((acc, team) => acc += team.members.length, 0)
+  }
+
+  getPercent(teams: ITeam[], date: Date): number {
+    return teams.reduce((acc, team) => acc += TeamUtils.getPercentageOfAbsentCount(team, date), 0)
   }
 }

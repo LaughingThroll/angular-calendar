@@ -10,7 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { CalendarNavigationComponent } from './components/calendar-navigation/calendar-navigation.component'
 import { CalendarTableComponent } from './components/calendar-table/calendar-table.component'
 import { CalendarSummaryComponent } from './components/calendar-summary/calendar-summary.component';
-import { ModalComponent } from './components/modal/modal.component'
+import { ModalComponent } from './components/modal/modal.component';
+import { TeamComponent } from './components/team/team.component'
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ModalComponent } from './components/modal/modal.component'
     CalendarNavigationComponent,
     CalendarTableComponent,
     CalendarSummaryComponent,
-    ModalComponent
+    ModalComponent,
+    TeamComponent
   ],
   entryComponents: [ModalComponent],
   imports: [

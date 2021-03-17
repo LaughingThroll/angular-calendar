@@ -12,8 +12,8 @@ export class CalendarNavigationComponent {
   
   constructor(private dateService: DateService) {}
   
-  changeDate(number: number): void {
-    this.dateService.changeDate(this.date, number)
+  changeDate(string: 'next' | 'prev'): void {
+    this.dateService.changeDate(this.date, string)
   } 
 
 }

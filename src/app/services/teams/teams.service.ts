@@ -4,7 +4,9 @@ import { Observable, of } from 'rxjs'
 import { switchMap, catchError } from 'rxjs/operators'
 
 import departmentTeams from '../../api/DB'
-import { IDepartmentTeams, ITeam, ICustomOptionsForPUT } from 'src/app/interfaces/DB'
+import { ITeam } from 'src/app/interfaces/team'
+import { IDepartmentTeams } from 'src/app/interfaces/departmentTeams'
+import { IDeafaultOptionsForPUT } from 'src/app/interfaces/defaultOptionsForPut'
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,7 @@ import { IDepartmentTeams, ITeam, ICustomOptionsForPUT } from 'src/app/interface
 export class TeamsService {
   public TEAMS_URL: string = "https://jsonplaceholder.typicode.com/posts/1"
   
-  public OPTIONS_FOR_PUT_REQUEST: ICustomOptionsForPUT = {
-    method: "PUT",
+  public OPTIONS_FOR_PUT_REQUEST: IDeafaultOptionsForPUT  = {
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },

@@ -70,38 +70,14 @@ $pseudo-border: 0.5px;
   }
 }
 
-
-
-.team {
-  padding: 7px 5px 7px 19px;
-
-  &__name {
-    @extend %font-bold;
-
-    display: inline-block;
-    max-width: 105px;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-transform: capitalize;
-    vertical-align: text-top;
-  }
-
-  &__other {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 20px;
-    transform: translateY(25%);
-
-    & > *:not(:last-child) {
-      margin-right: 8px;
-    }
+.calendar-body__cell {
+  &--team,
+  &--member {
+    padding: 7px 5px 7px 19px;  
   }
 }
 
 .member {
-  padding: 7px 5px 7px 19px;
   &__name {
     text-transform: uppercase;
   }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VacationsService } from './vacations.service';
+import { ModalHandlerService } from './modal-handler.service';
 
-describe('VacationsService', () => {
-  let service: VacationsService;
+describe('ModalHandlerService', () => {
+  let service: ModalHandlerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(VacationsService);
+    service = TestBed.inject(ModalHandlerService);
   });
 
   it('should be created', () => {

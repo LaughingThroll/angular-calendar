@@ -1,4 +1,4 @@
-import { TTheme } from './interfaces/utils'
+import { TTheme } from './interfaces/theme'
 
 export const THEMES: TTheme[]  = [
   ["melrose-theme", "melrose-theme--background"],
