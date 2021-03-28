@@ -1,8 +1,14 @@
 import { createArrayFromNumber } from './forArrays'
 
+const MILISECONDS_IN_ONE_DAY: number = 86400000
+
 export default class DateUtils {
   static formatDateInKebabCase(date: Date): string {
     return date.toISOString().match(/\d{4}-\d{2}-\d{2}/)![0]
+  }
+
+  static dateKebabFormat(day: number): string {
+    return this.formatDateInKebabCase(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + day))
   }
 
   static reverseDate(arr: string[], separator: string = '.'): string {
@@ -10,7 +16,7 @@ export default class DateUtils {
   }
 
   static countDayFromTimeStamp = (timestamp: number): number => {
-    const oneDay: number = 1000 * 60 * 60 * 24
+    const oneDay: number = MILISECONDS_IN_ONE_DAY
     let startDay: number = 0
     for (let i = 0; i <= timestamp; i += oneDay) startDay++
     return startDay

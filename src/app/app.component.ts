@@ -15,7 +15,7 @@ import { takeUntil } from 'rxjs/operators'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private unsubscribe$: Subject<any> = new Subject()
+  private unsubscriber$: Subject<any> = new Subject()
 
   public date: Date = new Date()
   public allDays: Date[] = []
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
 
   subscribeDate(): void {
     this.dateService.getDate()
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(takeUntil(this.unsubscriber$))
       .subscribe({
         next: date => {
           this.date = date
@@ -47,11 +47,9 @@ export class AppComponent implements OnInit {
 
   subscribeTeams(): void {
     this.teamsService.getTeams()
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(takeUntil(this.unsubscriber$))
       .subscribe({
-        next: teams => {
-          this.teams = teams
-        },
+        next: teams => this.teams = teams,
         error: err => {
           throw new Error('Как то неполучилось обработать запрос !!!' + err)
         }
@@ -59,7 +57,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next()
-    this.unsubscribe$.complete()
+    this.unsubscriber$.next()
+    this.unsubscriber$.complete()
   }
 }
