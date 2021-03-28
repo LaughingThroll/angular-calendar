@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   constructor(
     private dateService: DateService,
     private teamsService: TeamsService
-  ) { }
+    ) { }
 
   ngOnInit(): void {
     this.subscribeDate()
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
         }
       })
   }
-
+  
   subscribeTeams(): void {
     this.teamsService.getTeams()
       .pipe(takeUntil(this.unsubscriber$))

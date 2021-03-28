@@ -20,7 +20,6 @@ enum IDType {
   MEMBER_ID = "memberId"
 }
 
-
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -84,7 +83,6 @@ export class ModalComponent implements OnInit, OnDestroy {
         next: (value) => {
           this.currentMembers = findById(this.teams, IDType.TEAM_ID, value)!.members
           this.currentMemberID = this.currentMembers[0].memberId
-          console.log(this.currentMemberID, value)
         }
       })
 

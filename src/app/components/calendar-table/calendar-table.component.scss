@@ -12,7 +12,7 @@ $pseudo-border: 0.5px;
   th,
   td {
     border: 1px solid $main-border;
-    vertical-align: middle;
+    // vertical-align: middle;
   }  
 }
 
@@ -46,6 +46,7 @@ $pseudo-border: 0.5px;
 
 
 .calendar-header {
+  // height: 65px;
   .calendar-header__row > .calendar-header__cell {
     &:first-child {
       border-top: 0;
