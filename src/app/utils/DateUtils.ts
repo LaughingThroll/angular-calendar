@@ -18,7 +18,6 @@ export default class DateUtils {
   static countDayFromTimeStamp = (timestamp: number): number => {
     const oneDay: number = MILISECONDS_IN_ONE_DAY
     let startDay: number = 0
-
     for (let i = 0; i <= timestamp; i += oneDay) startDay++
     return startDay
   }

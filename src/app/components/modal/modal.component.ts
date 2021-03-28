@@ -15,12 +15,17 @@ import { IVacation } from 'src/app/interfaces/vacation'
 import { TeamsService } from 'src/app/services/teams/teams.service'
 import VacationsUtils from 'src/app/utils/VacationsUtils'
 
+enum IDType {
+  TEAM_ID = "teamId",
+  MEMBER_ID = "memberId"
+}
+
+
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   encapsulation: ViewEncapsulation.None
-
 })
 export class ModalComponent implements OnInit, OnDestroy {
   private unsubscriber$: Subject<any> = new Subject()
@@ -53,7 +58,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const { inputDays, selectedTeam } = this.modalForm.controls
+    const { inputDays, selectedTeam, selectedMember } = this.modalForm.controls
 
     inputDays.valueChanges
       .pipe(takeUntil(this.unsubscriber$))
@@ -77,19 +82,28 @@ export class ModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscriber$))
       .subscribe({
         next: (value) => {
-          this.currentMembers = findById(this.teams, "teamId", value)!.members
+          this.currentMembers = findById(this.teams, IDType.TEAM_ID, value)!.members
           this.currentMemberID = this.currentMembers[0].memberId
+          console.log(this.currentMemberID, value)
         }
       })
+
+    selectedMember.valueChanges
+    .pipe(takeUntil(this.unsubscriber$))
+    .subscribe({
+      next: (value) => {
+        this.currentMemberID = findById(this.currentMembers, IDType.MEMBER_ID, value)!.memberId
+      }
+    })
   }
 
 
   onSubmit() {
+    const separator = '-'
     const inputDaysForm = this.modalForm.get('inputDays')
-    const member = findById(this.currentMembers, "memberId", this.currentMemberID)
-
-    const startDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('from')?.value.split('-'))
-    const endDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('to')?.value.split('-'))
+    const member = findById(this.currentMembers, IDType.MEMBER_ID, this.currentMemberID)
+    const startDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('from')?.value.split(separator))
+    const endDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('to')?.value.split(separator))
     const typeDTO: VacationEnum = this.modalForm.get('selectedType')?.value
 
     const requestVacation: IVacation = {
@@ -97,8 +111,6 @@ export class ModalComponent implements OnInit, OnDestroy {
       endDate: endDateDTO,
       type: typeDTO
     }
-
-
 
     if (VacationsUtils.vacationIsExist(member!.vacations, requestVacation)) {
       member?.vacations.push(requestVacation)
