@@ -20,16 +20,16 @@ export default class VacationsUtils {
       const { startDate, endDate, type } = vacation
       const [ , startMonth, startYear ] = startDate.split(separator).map(Number)
       const [ , endMonth, endYear ] = endDate.split(separator).map(Number)
-      
+
       if (startMonth !== endMonth) {
         return [
           {
             startDate,
-            endDate: [lastDay, startMonth, startYear].join(separator),
+            endDate: [lastDay, startMonth < 10 ? `0${startMonth}`: startMonth , startYear].join(separator),
             type
           },
           {
-            startDate: ['01', endMonth, endYear].join(separator),
+            startDate: ['01', endMonth < 10 ? `0${endMonth}`: endMonth, endYear].join(separator),
             endDate,
             type
           }
@@ -41,13 +41,13 @@ export default class VacationsUtils {
 
   static vacationIsExist(currentVacations: IVacation[], vacation: IVacation, separator: string = '.'): boolean {
     return !currentVacations.find(( { startDate, endDate } ) => {
-      const [ currentStartDay, currentStartMonth ] = vacation.startDate.split(separator).map(Number)
-      const [ currentEndDay, currentEndMonth ] = vacation.endDate.split(separator).map(Number) 
-      const [ startDay, startMonth ] = startDate.split(separator).map(Number)
-      const [ endDay, endMonth ] = endDate.split(separator).map(Number)
+      const [ currentStartDay, currentStartMonth, currentStartYear] = vacation.startDate.split(separator).map(Number)
+      const [ currentEndDay, currentEndMonth, currentEndYear ] = vacation.endDate.split(separator).map(Number) 
+      const [ startDay, startMonth, startYear ] = startDate.split(separator).map(Number)
+      const [ endDay, endMonth, endYear ] = endDate.split(separator).map(Number)
 
-      return  (currentStartDay >= startDay  && currentStartMonth === startMonth) ||  
-      (currentEndDay <= endDay && currentEndMonth  === endMonth) 
+      return  (currentStartDay >= startDay && currentStartMonth === startMonth && currentStartYear === startYear) ||  
+      (currentEndDay <= endDay && currentEndMonth  === endMonth && currentEndYear === endYear) 
     })
   }
 
@@ -76,11 +76,10 @@ export default class VacationsUtils {
 
   static getSumVacationsDaysByMonth(vacations: IVacation[], cellDate: Date, separator: string = '.'): number {
     const filteredArray = this.getFilteredVacationsByMonth(vacations, cellDate)
-    const { reverseDate, countDayFromTimeStamp } = DateUtils
+    const { reverseDate } = DateUtils
 
     return filteredArray.reduce((acc, { startDate, endDate }) => {
-      const diff = Date.parse(reverseDate(endDate.split(separator))) - Date.parse(reverseDate(startDate.split(separator)))
-      return acc += countDayFromTimeStamp(diff) 
+      return acc += new Date(reverseDate(endDate.split(separator))).getDate() + 1  - new Date(reverseDate(startDate.split(separator))).getDate() 
     }, 0)
   }
 

@@ -6,7 +6,6 @@ import { switchMap, catchError } from 'rxjs/operators'
 
 import { ITeam } from 'src/app/interfaces/team'
 import { IDepartmentTeams } from 'src/app/interfaces/departmentTeams'
-import { IVacation } from 'src/app/interfaces/vacation'
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +26,7 @@ export class TeamsService {
   // TODO: Здесь нужен нормальный back-end чтобы не обновлять всю базу данных, а только отпуск 
   putVacation(teams: ITeam[]): Observable<object> {
     return this.http.put(`${this.TEAMS_URL}.json`, { teams }) 
-  } 
-
-  
+  }   
 }
 
 
