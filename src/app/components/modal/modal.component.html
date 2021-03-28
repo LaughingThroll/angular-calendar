@@ -1,18 +1,22 @@
 <div class="modal-header">
   <h4 class="modal-header__title" mat-dialog-title>Vacation Request</h4>
-  <div class="modal-header__days">countDays Days</div>
+  <div *ngIf="!isNotValidDays;else errorDays" class="modal-header__days">{{ countDays }} Days</div>
+  
 </div>
+  <ng-template #errorDays>
+    <div class="modal-header__days">is Not Valid Days</div>
+  </ng-template>
 
 <mat-dialog-content>
 
-  <form class="modal-body">
+  <form class="modal-body" [formGroup]="modalForm">
     <div class="modal-body__item">
       <div class="form-dates">
         <h5 class="form-dates__title">Vacation Request</h5>
-        <div class="form-dates__inner">
-          <label class="input-date">From <input class="input-date__field" type="date" />
+        <div class="form-dates__inner" formGroupName="inputDays">
+        <label class="input-date">From <input class="input-date__field" type="date" formControlName="from" />
           </label>
-          <label class="input-date">To <input class="input-date__field" type="date" />
+          <label class="input-date">To <input class="input-date__field" type="date" formControlName="to" />
           </label>
         </div>
       </div>
@@ -20,27 +24,22 @@
 
     <div class="modal-body__item">
       <div class="form-dates">
-        <h5 class="form-dates__title">Team</h5>
+        <h5 class="form-dates__title">Teams</h5>
         <div class="select">
-          <select class="select__main">
-            <option class="select__option">Options</option>
-            <option class="select__option">Options</option>
-            <option class="select__option">Options</option>
+          <select class="select__main" formControlName="selectedTeam">
+            <option *ngFor="let team of teams" [ngValue]="team.teamId" class="select__option">{{ team.name }}</option>
           </select>
         </div>
 
       </div>
     </div>
 
-
     <div class="modal-body__item">
       <div class="form-dates">
         <h5 class="form-dates__title">User</h5>
         <div class="select">
-          <select class="select__main">
-            <option class="select__option">Options</option>
-            <option class="select__option">Options</option>
-            <option class="select__option">Options</option>
+          <select class="select__main" formControlName="selectedMember">
+            <option *ngFor="let member of currentMembers" [ngValue]="member.memberId" class="select__option">{{ member.name }}</option>
           </select>
         </div>
       </div>
@@ -50,10 +49,9 @@
       <div class="form-dates">
         <h5 class="form-dates__title">Vacations Day</h5>
         <div class="select">
-          <select class="select__main">
-            <option class="select__option">Options</option>
-            <option class="select__option">Options</option>
-            <option class="select__option">Options</option>
+          <select class="select__main" formControlName="selectedType">
+            <option class="select__option" value="Paid">Paid Day On (PD)</option>
+            <option class="select__option" value="UnPaid">Paid Day Off (PD)</option>
           </select>
         </div>
       </div>
@@ -66,6 +64,10 @@
 <mat-dialog-actions>
   <div class="modal-footer">
     <button class="button button--secondary" mat-dialog-close>Cancel</button>
-    <button type="submit" class="button button--primary">Send</button>
+    <button type="submit" [ngClass]="{
+      'button': true, 
+      'button--primary': true,
+      'button--disabled': isNotValidDays
+    }" (click)="onSubmit()">Send</button>
   </div>
 </mat-dialog-actions>

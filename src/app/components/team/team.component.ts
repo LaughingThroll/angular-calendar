@@ -15,6 +15,7 @@ export class TeamComponent {
     members: [],
     teamId: 0
   }
+  
   @Input() allDays: Date[] = []
 
   getPercentageOfAbsentCount(team: ITeam): number {
