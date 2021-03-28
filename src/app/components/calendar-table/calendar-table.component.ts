@@ -32,7 +32,9 @@ export class CalendarTableComponent {
   constructor(private dialog: MatDialog) { }
 
   openModal() {
-    this.dialog.open(ModalComponent)
+    this.dialog.open(ModalComponent, {
+      data: this.teams
+    })
   }
 
   isWeekend(date: Date): boolean {
