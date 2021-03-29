@@ -12,8 +12,8 @@ $pseudo-border: 0.5px;
   th,
   td {
     border: 1px solid $main-border;
-    // vertical-align: middle;
-  }  
+    vertical-align: middle;
+  }
 }
 
 .calendar-table {
@@ -22,7 +22,7 @@ $pseudo-border: 0.5px;
     border-top: $indentation solid $white;
   }
 
- .calendar-table--indentation:not(:first-child) {
+  .calendar-table--indentation:not(:first-child) {
     td::before,
     td::after {
       content: "";
@@ -43,10 +43,7 @@ $pseudo-border: 0.5px;
   }
 }
 
-
-
-.calendar-header {
-  // height: 65px;
+.calendar-header {  
   .calendar-header__row > .calendar-header__cell {
     &:first-child {
       border-top: 0;
@@ -61,8 +58,9 @@ $pseudo-border: 0.5px;
     span {
       display: block;
     }
+    
   }
-  
+
   &__day {
     font-weight: 400;
   }
@@ -74,7 +72,7 @@ $pseudo-border: 0.5px;
 .calendar-body__cell {
   &--team,
   &--member {
-    padding: 7px 5px 7px 19px;  
+    padding: 7px 5px 7px 19px;
   }
 }
 
@@ -84,7 +82,7 @@ $pseudo-border: 0.5px;
   }
 }
 
-.calendar-footer {  
+.calendar-footer {
   &__cell {
     border-bottom: 0 !important;
     background-color: $concrete;
@@ -103,4 +101,3 @@ $pseudo-border: 0.5px;
 
   text-align: center;
 }
-

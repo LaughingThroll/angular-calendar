@@ -1,5 +1,5 @@
 import { ITeam } from './team'
 
-export interface IDepartmentTeams {
+export interface ITeams {
   teams: ITeam[]
 }

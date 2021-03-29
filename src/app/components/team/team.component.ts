@@ -9,13 +9,7 @@ import TeamUtils from 'src/app/utils/TeamUtils'
 })
 export class TeamComponent {
 
-  @Input() team: ITeam = {
-    name: 'default',
-    percentageOfAbsent: [],
-    members: [],
-    teamId: 0
-  }
-  
+  @Input() team: ITeam | null = null
   @Input() allDays: Date[] = []
 
   getPercentageOfAbsentCount(team: ITeam): number {

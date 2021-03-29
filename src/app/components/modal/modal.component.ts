@@ -5,7 +5,7 @@ import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 
 import DateUtils from 'src/app/utils/DateUtils'
-import { findById } from 'src/app/utils/forArrays'
+import { findByID, findIndexByID } from 'src/app/utils/forArrays'
 
 import { ID } from 'src/app/interfaces/common'
 import { IMember } from 'src/app/interfaces/member'
@@ -81,25 +81,26 @@ export class ModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscriber$))
       .subscribe({
         next: (value) => {
-          this.currentMembers = findById(this.teams, IDType.TEAM_ID, value)!.members
+          this.currentMembers = findByID(this.teams, IDType.TEAM_ID, value)!.members
           this.currentMemberID = this.currentMembers[0].memberId
         }
       })
 
     selectedMember.valueChanges
-    .pipe(takeUntil(this.unsubscriber$))
-    .subscribe({
-      next: (value) => {
-        this.currentMemberID = findById(this.currentMembers, IDType.MEMBER_ID, value)!.memberId
-      }
-    })
+      .pipe(takeUntil(this.unsubscriber$))
+      .subscribe({
+        next: (value) => {
+          this.currentMemberID = findByID(this.currentMembers, IDType.MEMBER_ID, value)!.memberId
+        }
+      })
   }
 
 
   onSubmit() {
     const separator = '-'
     const inputDaysForm = this.modalForm.get('inputDays')
-    const member = findById(this.currentMembers, IDType.MEMBER_ID, this.currentMemberID)
+    const teamIndex = findIndexByID(this.teams, IDType.TEAM_ID, this.currentTeamID)
+    const memberIndex = findIndexByID(this.currentMembers, IDType.MEMBER_ID, this.currentMemberID)
     const startDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('from')?.value.split(separator))
     const endDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('to')?.value.split(separator))
     const typeDTO: VacationEnum = this.modalForm.get('selectedType')?.value
@@ -110,17 +111,24 @@ export class ModalComponent implements OnInit, OnDestroy {
       type: typeDTO
     }
 
-    if (VacationsUtils.vacationIsExist(member!.vacations, requestVacation)) {
-      member?.vacations.push(requestVacation)
+    if (teamIndex === undefined || memberIndex === undefined) {
+      window.confirm('Такой команды или участника нету')
+      return
+    }
 
-      // TODO: Здесь нужен нормальный back-end чтобы не обновлять всю базу данных, а только отпуск 
-      this.teamsService.putVacation(this.teams)
+    const currentVacations = this.currentMembers[memberIndex]!.vacations
+    
+    if (!VacationsUtils.vacationIncludesVacation(currentVacations, requestVacation)) {
+      currentVacations.push(requestVacation)
+
+      this.teamsService.putVacation(teamIndex, memberIndex, currentVacations.length - 1, requestVacation)
         .pipe(takeUntil(this.unsubscriber$))
         .subscribe({
           error: (err) => {
             console.log(err)
           }
         })
+
 
     } else {
       window.confirm('Такой отпуск включает другой отпуск и есть недопустимым в данной системе')

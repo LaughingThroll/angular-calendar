@@ -39,16 +39,33 @@ export default class VacationsUtils {
     })
   }
 
-  static vacationIsExist(currentVacations: IVacation[], vacation: IVacation, separator: string = '.'): boolean {
-    return !currentVacations.find(( { startDate, endDate } ) => {
-      const [ currentStartDay, currentStartMonth, currentStartYear] = vacation.startDate.split(separator).map(Number)
-      const [ currentEndDay, currentEndMonth, currentEndYear ] = vacation.endDate.split(separator).map(Number) 
-      const [ startDay, startMonth, startYear ] = startDate.split(separator).map(Number)
-      const [ endDay, endMonth, endYear ] = endDate.split(separator).map(Number)
+  // static vacationIsExist(currentVacations: IVacation[], vacation: IVacation, separator: string = '.'): boolean {
+  //   return !currentVacations.find(( { startDate, endDate } ) => {
+  //     const [ currentStartDay, currentStartMonth, currentStartYear] = vacation.startDate.split(separator).map(Number)
+  //     const [ currentEndDay, currentEndMonth, currentEndYear ] = vacation.endDate.split(separator).map(Number) 
+  //     const [ startDay, startMonth, startYear ] = startDate.split(separator).map(Number)
+  //     const [ endDay, endMonth, endYear ] = endDate.split(separator).map(Number)
 
-      return  (currentStartDay >= startDay && currentStartMonth === startMonth && currentStartYear === startYear) ||  
-      (currentEndDay <= endDay && currentEndMonth  === endMonth && currentEndYear === endYear) 
-    })
+  //     return  (currentStartDay >= startDay && currentStartMonth === startMonth && currentStartYear === startYear) ||  
+  //     (currentEndDay <= endDay && currentEndMonth  === endMonth && currentEndYear === endYear) 
+  //   })
+  // }
+
+  static vacationIncludesVacation = (currentVacations: IVacation[], vacation: IVacation, separator: string = '.'): boolean => {
+    return currentVacations.map(({ startDate, endDate }) => {
+
+      const [currentStartDay, currentStartMonth,] = startDate.split(separator).map(Number)
+      const [currentEndDay, currentEndMonth,] = endDate.split(separator).map(Number)
+      const [startDay, startMonth,] = vacation.startDate.split(separator).map(Number)
+      const [endDay, endMonth,] = vacation.endDate.split(separator).map(Number)
+    
+      return (
+        startDay <= currentStartDay && 
+        endDay >= currentEndDay && 
+        startMonth === currentStartMonth && 
+        endMonth === currentEndMonth
+      )
+    }).some(Boolean)
   }
 
   static getExsistingTypeVacation(vacations: IVacation[], cellDate: Date, type: VacationEnum.PAID | VacationEnum.UNPAID = VacationEnum.PAID): boolean {
