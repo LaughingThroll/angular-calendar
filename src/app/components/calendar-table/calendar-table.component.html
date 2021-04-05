@@ -37,9 +37,10 @@
       </tr>
 
       <tr *ngFor="let member of getAllMembers(team.id)"  class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
+        
         {{ takeVacations(member.vacations)  }}
-        <td class="calendar-body__cell calendar-body__cell--member member" >
-          
+
+        <td class="calendar-body__cell calendar-body__cell--member member" >   
           <span class="member__name">{{ member.name }}</span>
         </td>
       
@@ -48,7 +49,7 @@
           'cell-gray': isWeekend(date)
         }">
 
-        <div *ngIf="isPaidCell(idx) || isUnPaidCell(idx)" 
+        <div *ngIf="isUnPaidCell(idx) || isPaidCell(idx)" 
         [ngClass]="{
           'cell-vacations': true,
           'cell-vacations--paid': isPaidCellVariables,

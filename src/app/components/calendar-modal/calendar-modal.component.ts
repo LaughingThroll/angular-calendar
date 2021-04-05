@@ -130,7 +130,7 @@ export class CalendarModalComponent implements OnInit, OnDestroy {
 
 
     } else {
-      window.confirm('Такой отпуск включает другой отпуск и есть недопустимым в данной системе')
+      window.alert('Такой отпуск включает другой отпуск и есть недопустимым в данной системе')
       return
     }
   }
