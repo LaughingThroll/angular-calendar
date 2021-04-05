@@ -33,6 +33,7 @@ export class CalendarModalComponent implements OnInit, OnDestroy {
   public memberID: ID = this.teams[0].members[0].id
   public currentMembers: IMember[] = this.teams[0].members
   public isNotValidDays: boolean = false
+  public isDisabled: boolean = false
 
   public modalForm: FormGroup = new FormGroup({
     inputDays: new FormGroup({
@@ -64,9 +65,9 @@ export class CalendarModalComponent implements OnInit, OnDestroy {
 
           if (diff > 0) {
             this.countDays = DateUtils.countDayFromTimeStamp(diff)
-            this.isNotValidDays = false
+            this.isNotValidDays = this.isDisabled = false
           } else {
-            this.isNotValidDays = true
+            this.isNotValidDays = this.isDisabled = true
           }
         }
       })
@@ -111,12 +112,16 @@ export class CalendarModalComponent implements OnInit, OnDestroy {
     if (!containsExistVacation.some(Boolean)) {
       const { memberID, teamID } = this
       currentVacations.push(requestVacation)
-    
+      
+      this.isDisabled = true
       this.teamsService.putVacation({ teamID, memberID }, requestVacation)
-        .pipe(takeUntil(this.unsubscriber$))
+        .pipe(takeUntil(this.unsubscriber$)) 
         .subscribe({
           next: (res) => {
-            if (res) this.modalRef.close()
+            if (res) {
+              this.modalRef.close()
+              this.isDisabled = false
+            }
           },
           error: (err) => {
             console.log(err)
