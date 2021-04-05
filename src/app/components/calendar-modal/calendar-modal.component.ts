@@ -5,7 +5,6 @@ import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 
 import DateUtils from 'src/app/utils/DateUtils'
-import { findByID, findIndexByID } from 'src/app/utils/forArrays'
 
 import { ID } from 'src/app/interfaces/common'
 import { IMember } from 'src/app/interfaces/member'
@@ -15,18 +14,13 @@ import { IVacation } from 'src/app/interfaces/vacation'
 import { TeamsService } from 'src/app/services/teams/teams.service'
 import VacationsUtils from 'src/app/utils/VacationsUtils'
 
-enum IDType {
-  TEAM_ID = "teamId",
-  MEMBER_ID = "memberId"
-}
-
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  selector: 'app-calendar-modal',
+  templateUrl: './calendar-modal.component.html',
+  styleUrls: ['./calendar-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ModalComponent implements OnInit, OnDestroy {
+export class CalendarModalComponent implements OnInit, OnDestroy {
   private unsubscriber$: Subject<any> = new Subject()
 
   private startDay: string = DateUtils.dateKebabFormat(1)
@@ -35,8 +29,8 @@ export class ModalComponent implements OnInit, OnDestroy {
   private endDayTimeStamp: number = Date.parse(this.endDay)
 
   public countDays: number = DateUtils.countDayFromTimeStamp(this.endDayTimeStamp - this.startDayTimeStamp)
-  public currentTeamID: ID = this.teams[0].teamId
-  public currentMemberID: ID = this.teams[0].members[0].memberId
+  public teamID: ID = this.teams[0].id
+  public memberID: ID = this.teams[0].members[0].id
   public currentMembers: IMember[] = this.teams[0].members
   public isNotValidDays: boolean = false
 
@@ -45,14 +39,14 @@ export class ModalComponent implements OnInit, OnDestroy {
       from: new FormControl(this.startDay),
       to: new FormControl(this.endDay)
     }),
-    selectedTeam: new FormControl(this.currentTeamID),
-    selectedMember: new FormControl(this.currentMemberID),
+    selectedTeam: new FormControl(this.teamID),
+    selectedMember: new FormControl(this.memberID),
     selectedType: new FormControl(VacationEnum.PAID)
   })
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public teams: ITeam[],
-    private modalRef: MatDialogRef<ModalComponent>,
+    private modalRef: MatDialogRef<CalendarModalComponent>,
     private teamsService: TeamsService
   ) { }
 
@@ -81,8 +75,10 @@ export class ModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscriber$))
       .subscribe({
         next: (value) => {
-          this.currentMembers = findByID(this.teams, IDType.TEAM_ID, value)!.members
-          this.currentMemberID = this.currentMembers[0].memberId
+          const currentTeam = this.teams.find(({ id }) => id === value)
+          this.teamID = currentTeam!.id 
+          this.currentMembers = currentTeam!.members
+          this.memberID = this.currentMembers[0].id
         }
       })
 
@@ -90,7 +86,7 @@ export class ModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscriber$))
       .subscribe({
         next: (value) => {
-          this.currentMemberID = findByID(this.currentMembers, IDType.MEMBER_ID, value)!.memberId
+          this.memberID = this.currentMembers.find(({id}) => id === value)!.id
         }
       })
   }
@@ -99,8 +95,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     const separator = '-'
     const inputDaysForm = this.modalForm.get('inputDays')
-    const teamIndex = findIndexByID(this.teams, IDType.TEAM_ID, this.currentTeamID)
-    const memberIndex = findIndexByID(this.currentMembers, IDType.MEMBER_ID, this.currentMemberID)
     const startDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('from')?.value.split(separator))
     const endDateDTO: string = DateUtils.reverseDate(inputDaysForm?.get('to')?.value.split(separator))
     const typeDTO: VacationEnum = this.modalForm.get('selectedType')?.value
@@ -111,22 +105,19 @@ export class ModalComponent implements OnInit, OnDestroy {
       type: typeDTO
     }
 
-    if (teamIndex === undefined || memberIndex === undefined) {
-      window.confirm('Такой команды или участника нету')
-      return
-    }
-
-    const currentVacations = this.currentMembers[memberIndex]!.vacations
+    const currentVacations = this.currentMembers.find(({id}) => id === this.memberID)!.vacations
     const containsExistVacation = currentVacations.map(currVac => VacationsUtils.vacationIncludesVacation(currVac, requestVacation))
 
-
-
     if (!containsExistVacation.some(Boolean)) {
+      const { memberID, teamID } = this
       currentVacations.push(requestVacation)
-
-      this.teamsService.putVacation(teamIndex, memberIndex, currentVacations.length - 1, requestVacation)
+    
+      this.teamsService.putVacation({ teamID, memberID }, requestVacation)
         .pipe(takeUntil(this.unsubscriber$))
         .subscribe({
+          next: (res) => {
+            if (res) this.modalRef.close()
+          },
           error: (err) => {
             console.log(err)
           }
@@ -137,8 +128,6 @@ export class ModalComponent implements OnInit, OnDestroy {
       window.confirm('Такой отпуск включает другой отпуск и есть недопустимым в данной системе')
       return
     }
-
-    this.modalRef.close()
   }
 
   ngOnDestroy(): void {

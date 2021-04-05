@@ -36,7 +36,7 @@
         <td class="calendar-body__cell cell-gray"></td>
       </tr>
 
-      <tr *ngFor="let member of team.members"  class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
+      <tr *ngFor="let member of getAllMembers(team.id)"  class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
         {{ takeVacations(member.vacations)  }}
         <td class="calendar-body__cell calendar-body__cell--member member" >
           

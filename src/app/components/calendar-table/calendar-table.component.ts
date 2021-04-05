@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { ModalComponent } from '../modal/modal.component'
+import { CalendarModalComponent } from '../calendar-modal/calendar-modal.component'
 
 import { THEMES } from 'src/app/constant'
 
@@ -11,7 +11,8 @@ import { IVacation } from 'src/app/interfaces/vacation'
 import { ITeam } from 'src/app/interfaces/team'
 import { TTheme } from 'src/app/interfaces/theme'
 import { VacationEnum } from 'src/app/interfaces/enums'
-
+import { IMember } from 'src/app/interfaces/member'
+import { ID } from 'src/app/interfaces/common'
 
 @Component({
   selector: 'app-calendar-table',
@@ -32,13 +33,17 @@ export class CalendarTableComponent {
   constructor(private dialog: MatDialog) { }
 
   openModal() {
-    this.dialog.open(ModalComponent, {
+    this.dialog.open(CalendarModalComponent, {
       data: this.teams
     })
   }
 
   isWeekend(date: Date): boolean {
     return DateUtils.isWeekend(date)
+  }
+
+  getAllMembers(teamID: ID): IMember[] {
+    return this.teams.find(({id}) => id === teamID)!.members
   }
 
   takeVacations(vacations: IVacation[]): void {

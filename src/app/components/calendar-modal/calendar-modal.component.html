@@ -27,7 +27,7 @@
         <h5 class="form-dates__title">Teams</h5>
         <div class="select">
           <select class="select__main" formControlName="selectedTeam">
-            <option *ngFor="let team of teams" [ngValue]="team.teamId" class="select__option">{{ team.name }}</option>
+            <option *ngFor="let team of teams" [ngValue]="team.id" class="select__option">{{ team.name }}</option>
           </select>
         </div>
 
@@ -39,7 +39,7 @@
         <h5 class="form-dates__title">User</h5>
         <div class="select">
           <select class="select__main" formControlName="selectedMember">
-            <option *ngFor="let member of currentMembers" [ngValue]="member.memberId" class="select__option">{{ member.name }}</option>
+            <option *ngFor="let member of currentMembers" [ngValue]="member.id" class="select__option">{{ member.name }}</option>
           </select>
         </div>
       </div>

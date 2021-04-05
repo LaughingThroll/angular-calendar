@@ -1,8 +1,18 @@
 import { IMember } from './member'
+import { IFirebaseData, ID } from './common'
 
-export interface ITeam {
+interface ITeamMain {
   name: string
   percentageOfAbsent: number[]
-  members: IMember[]
-  teamId: number
+  id: ID
 }
+
+export interface ITeamResponse extends ITeamMain {
+  members: IFirebaseData<IMember>
+}
+
+export interface ITeam extends ITeamMain {
+  members: IMember[]
+}
+
+
