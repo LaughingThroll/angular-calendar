@@ -3,9 +3,14 @@ import DateUtils from './DateUtils'
 import { IVacation } from './../interfaces/vacation'
 import { VacationEnum } from './../interfaces/enums'
 
+interface IVacationDate {
+  startDate: string
+  endDate: string
+} 
+
 export default class VacationsUtils {
 
-  private static checkVacation(cellDate: Date, startDate: string, endDate: string, separator: string = '.'): boolean {
+  private static checkVacation(cellDate: Date, { startDate, endDate }: IVacationDate, separator: string = '.'): boolean {
     return cellDate >= new Date(DateUtils.reverseDate(startDate.split(separator))) &&
       cellDate <= new Date(DateUtils.reverseDate(endDate.split(separator)))
   }
@@ -43,9 +48,9 @@ export default class VacationsUtils {
       let [, startMonth, startYear] = startDate.split(separator).toNumber()
       const [, endMonth, endYear] = endDate.split(separator).toNumber()
       const diff = endMonth - startMonth
-      
+
       if (diff === 1) return this.getSplitedVacation(vacation, lastDay)
-      // diff > 1
+
       if (diff > 1) {
         const arrVacations = this.getSplitedVacation(vacation, lastDay)
         const fullMonth = (month: number): IVacation => ({
@@ -65,26 +70,13 @@ export default class VacationsUtils {
   }
 
 
-  static vacationIncludesVacation = (currentVacations: IVacation[], vacation: IVacation, separator: string = '.'): boolean => {
-    return currentVacations.map(({ startDate, endDate }) => {
-
-      const [currentStartDay, currentStartMonth,] = startDate.split(separator).toNumber()
-      const [currentEndDay, currentEndMonth,] = endDate.split(separator).toNumber()
-      const [startDay, startMonth,] = vacation.startDate.split(separator).toNumber()
-      const [endDay, endMonth,] = vacation.endDate.split(separator).toNumber()
-
-      return (
-        startDay <= currentStartDay &&
-        endDay >= currentEndDay &&
-        startMonth === currentStartMonth &&
-        endMonth === currentEndMonth
-      )
-    }).some(Boolean)
+  static vacationIncludesVacation({ startDate, endDate }: IVacation, vacation: IVacation, separator: string = '.'): boolean  {
+    return VacationsUtils.checkVacation(new Date(DateUtils.reverseDate(vacation.startDate.split(separator))), { startDate, endDate })
   }
 
   static getExsistingTypeVacation(vacations: IVacation[], cellDate: Date, type: VacationEnum.PAID | VacationEnum.UNPAID = VacationEnum.PAID): boolean {
     return vacations
-      .map(({ startDate, endDate, type }) => (this.checkVacation(cellDate, startDate, endDate) ? type : null))
+      .map(({ startDate, endDate, type }) => (this.checkVacation(cellDate, { startDate, endDate }) ? type : null))
       .some(el => el === type)
   }
 

@@ -117,8 +117,11 @@ export class ModalComponent implements OnInit, OnDestroy {
     }
 
     const currentVacations = this.currentMembers[memberIndex]!.vacations
-    
-    if (!VacationsUtils.vacationIncludesVacation(currentVacations, requestVacation)) {
+    const containsExistVacation = currentVacations.map(currVac => VacationsUtils.vacationIncludesVacation(currVac, requestVacation))
+
+
+
+    if (!containsExistVacation.some(Boolean)) {
       currentVacations.push(requestVacation)
 
       this.teamsService.putVacation(teamIndex, memberIndex, currentVacations.length - 1, requestVacation)
