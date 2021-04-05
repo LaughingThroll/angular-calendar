@@ -9,3 +9,16 @@ export const findByID = <T extends { [key: string]: any }>(arr: T[], id: string,
 export const findIndexByID = <T extends { [key: string]: any }>(arr: T[], id: string, currentId: ID): number | undefined => {
   return arr.findIndex((el: T) => el[id] === currentId)
 }
+
+
+declare global {
+  interface Array<T> {
+    toNumber(): number[] 
+  } 
+}
+
+
+Array.prototype.toNumber = function() {
+  return this.map(Number)
+}
+

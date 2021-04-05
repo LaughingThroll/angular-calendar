@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ModalComponent } from '../modal/modal.component'
 
@@ -20,7 +20,7 @@ import { VacationEnum } from 'src/app/interfaces/enums'
 })
 export class CalendarTableComponent {  
   // TODO Need refactoring getSplitVacations in every methods 
-  
+  private newVacations: IVacation[] = []
   public isPaidCellVariables: boolean = false
   public isUnPaidCellVariables: boolean = false
   public isStartDayVariables: boolean = false
@@ -41,33 +41,32 @@ export class CalendarTableComponent {
     return DateUtils.isWeekend(date)
   }
 
-  isPaidCell(vacations: IVacation[], index: number): boolean {
-    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
-    this.isPaidCellVariables = VacationsUtils.getExsistingTypeVacation(newVacations, this.allDays[index], VacationEnum.PAID)
+  takeVacations(vacations: IVacation[]): void {
+    this.newVacations = VacationsUtils.getSplitVacations(vacations, this.allDays.length)
+  }
+
+  isPaidCell(index: number): boolean {
+    this.isPaidCellVariables = VacationsUtils.getExsistingTypeVacation(this.newVacations, this.allDays[index], VacationEnum.PAID)
     return this.isPaidCellVariables
   }
 
-  isUnPaidCell(vacations: IVacation[], index: number): boolean {
-    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
-    this.isUnPaidCellVariables = VacationsUtils.getExsistingTypeVacation(newVacations, this.allDays[index], VacationEnum.UNPAID)
+  isUnPaidCell(index: number): boolean {
+    this.isUnPaidCellVariables = VacationsUtils.getExsistingTypeVacation(this.newVacations, this.allDays[index], VacationEnum.UNPAID)
     return this.isUnPaidCellVariables
   }
 
-   isStartDay(vacations: IVacation[], index: number): boolean {
-    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
-    this.isStartDayVariables = VacationsUtils.isFirstDay(newVacations, this.allDays[index])
+   isStartDay(index: number): boolean {
+    this.isStartDayVariables = VacationsUtils.isFirstDay(this.newVacations, this.allDays[index])
     return this.isStartDayVariables
   }
 
-  isEndDay(vacations: IVacation[], index: number): boolean {
-    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
-    this.isEndDayVariables = VacationsUtils.isLastDay(newVacations, this.allDays[index])
+  isEndDay(index: number): boolean {
+    this.isEndDayVariables = VacationsUtils.isLastDay(this.newVacations, this.allDays[index])
     return this.isEndDayVariables
   }
 
-  getSumVacationsDaysByMonth(vacations: IVacation[]): number {
-    const newVacations =  VacationsUtils.getSplitVacations(vacations, this.allDays.length)
-    return VacationsUtils.getSumVacationsDaysByMonth(newVacations, this.allDays[1])
+  getSumVacationsDaysByMonth(): number {
+    return VacationsUtils.getSumVacationsDaysByMonth(this.newVacations, this.allDays[1])
   }
 
   getSumVacationsDaysByDay(index: number): number {
