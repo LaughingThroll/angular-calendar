@@ -1,11 +1,11 @@
 <div class="team">
-  <span class="team__name">{{ team.name }}</span>
+  <span class="team__name">{{ team?.name }}</span>
   <div class="team__other">
     <div class="team__users users">
       <img class="users__svg" src="../assets/images/icons/users.svg" alt="" />
-      <span class="users__count">{{ team.members.length }}</span>
+      <span class="users__count">{{ team?.members?.length }}</span>
     </div>
-    <div class="team__weekend-percent weekend-percent">{{ getPercentageOfAbsentCount(team) }}%</div>
+    <div class="team__weekend-percent weekend-percent">{{ team && getPercentageOfAbsentCount(team) }}%</div>
     <button class="button-arrow-up"></button>
   </div>
 </div>

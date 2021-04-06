@@ -11,7 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { CalendarNavigationComponent } from './components/calendar-navigation/calendar-navigation.component'
 import { CalendarTableComponent } from './components/calendar-table/calendar-table.component'
 import { CalendarSummaryComponent } from './components/calendar-summary/calendar-summary.component'
-import { ModalComponent } from './components/modal/modal.component'
+import { CalendarModalComponent } from './components/calendar-modal/calendar-modal.component'
 import { TeamComponent } from './components/team/team.component'
 
 
@@ -21,10 +21,10 @@ import { TeamComponent } from './components/team/team.component'
     CalendarNavigationComponent,
     CalendarTableComponent,
     CalendarSummaryComponent,
-    ModalComponent,
+    CalendarModalComponent,
     TeamComponent
   ],
-  entryComponents: [ModalComponent],
+  entryComponents: [CalendarModalComponent],
   imports: [
     BrowserModule,
     CommonModule,

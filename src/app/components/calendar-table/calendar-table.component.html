@@ -3,7 +3,6 @@
   <thead class="calendar-header">
     <tr class="calendar-header__row">
       <th class="calendar-header__cell">
-        <!-- CLICK OPEN_MODAL -->
         <button class="button button--icon-plus button--primary" (click)="openModal()">Add vacation</button>
       </th>
 
@@ -37,9 +36,11 @@
         <td class="calendar-body__cell cell-gray"></td>
       </tr>
 
-      <tr *ngFor="let member of team.members" class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
-        <td class="calendar-body__cell calendar-body__cell--member member">
-          
+      <tr *ngFor="let member of getAllMembers(team.id)"  class='{{"calendar-body__member "  + this.getTheme(teamIndex)[0] }}'>
+        
+        {{ takeVacations(member.vacations)  }}
+
+        <td class="calendar-body__cell calendar-body__cell--member member" >   
           <span class="member__name">{{ member.name }}</span>
         </td>
       
@@ -48,20 +49,22 @@
           'cell-gray': isWeekend(date)
         }">
 
-        <div *ngIf="isPaidCell(member.vacations, idx) || isUnPaidCell(member.vacations, idx)" 
+        <div *ngIf="isUnPaidCell(idx) || isPaidCell(idx)" 
         [ngClass]="{
           'cell-vacations': true,
           'cell-vacations--paid': isPaidCellVariables,
           'cell-vacations--unpaid': isUnPaidCellVariables,
-          'cell-vacations--start-vac': isStartDay(member.vacations , idx),
-          'cell-vacations--end-vac': isEndDay(member.vacations, idx),
+          'cell-vacations--start-vac': isStartDay(idx),
+          'cell-vacations--end-vac': isEndDay(idx),
           'cell-vacations--unpaid-start-vac': isUnPaidCellVariables && isStartDayVariables,
           'cell-vacations--unpaid-end-vac': isUnPaidCellVariables && isEndDayVariables
-        }">Pd</div>
+        }">  
+        <!-- <span class="cell-vacations__text" *ngIf="isStartDayVariables" #vacationtext>Pd</span>  -->
+      </div> 
 
         </td>
       
-        <td class="cell-summ calendar-body__cell cell-gray">{{ getSumVacationsDaysByMonth(member.vacations) }}</td>
+        <td class="cell-summ calendar-body__cell cell-gray">{{ getSumVacationsDaysByMonth() }}</td>
       
       </tr>
 
@@ -71,11 +74,11 @@
   <tfoot class="calendar-footer calendar-table--indentation">
     <tr class="calendar-footer__row">
       <td class="calendar-footer__cell cell-gray">Day-Person-Stats</td>
-      <td *ngFor="let date of allDays; let idx = index" [ngClass]="{
+       <td *ngFor="let date of allDays; let idx = index" [ngClass]="{
         'cell-summ': true, 
         'calendar-footer__cell': true, 
         'cell-gray': isWeekend(date) 
-      }">{{ getSumVacationsDaysByDay(idx) }}</td>
+      }">{{ getSumVacationsDaysByDay(idx) }}</td> 
       <td class="calendar-footer__cell cell-gray"></td>
     </tr>
   </tfoot>
