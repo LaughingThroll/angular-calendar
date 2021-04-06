@@ -97,13 +97,14 @@ export default class VacationsUtils {
     })
   }
 
-  static getSumVacationsDaysByMonth(vacations: IVacation[], cellDate: Date, separator: string = '.'): number {
-    const filteredArray = this.getFilteredVacationsByMonth(vacations, cellDate)
+  static getCountDaysInVacation({ startDate, endDate }: IVacation, separator: string = '.'): number {
     const { reverseDate } = DateUtils
+    return new Date(reverseDate(endDate.split(separator))).getDate() + 1 - new Date(reverseDate(startDate.split(separator))).getDate()
+  }
 
-    return filteredArray.reduce((acc, { startDate, endDate }) => {
-      return acc += new Date(reverseDate(endDate.split(separator))).getDate() + 1 - new Date(reverseDate(startDate.split(separator))).getDate()
-    }, 0)
+  static getSumVacationsDaysByMonth(vacations: IVacation[], cellDate: Date): number {
+    const filteredArray = this.getFilteredVacationsByMonth(vacations, cellDate)
+    return filteredArray.reduce((acc, vacation) => acc += this.getCountDaysInVacation(vacation), 0)
   }
 
   static getSumVacationsDaysByDay(vacations: IVacation[], cellDate: Date, separator: string = '.'): number {

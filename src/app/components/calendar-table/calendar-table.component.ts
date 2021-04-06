@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, ElementRef, Input, ViewChild, ContentChild, AfterViewInit, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { CalendarModalComponent } from '../calendar-modal/calendar-modal.component'
 
@@ -19,8 +19,7 @@ import { ID } from 'src/app/interfaces/common'
   templateUrl: './calendar-table.component.html',
   styleUrls: ['./calendar-table.component.scss']
 })
-export class CalendarTableComponent {  
-  // TODO Need refactoring getSplitVacations in every methods 
+export class CalendarTableComponent  {  
   private newVacations: IVacation[] = []
   public isPaidCellVariables: boolean = false
   public isUnPaidCellVariables: boolean = false
@@ -29,10 +28,11 @@ export class CalendarTableComponent {
 
   @Input() teams: ITeam[] = []
   @Input() allDays: Date[] = []
+  // @ViewChild("vacationtext", { read: ElementRef }) vacationText!: ElementRef        
 
   constructor(private dialog: MatDialog) { }
 
-  openModal() {
+  openModal(): void {
     this.dialog.open(CalendarModalComponent, {
       data: this.teams
     })
