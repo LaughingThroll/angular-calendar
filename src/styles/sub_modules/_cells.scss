@@ -5,8 +5,6 @@ $vac-padding: 2px;
   position: relative;
   text-align: center;
   color: $white;
-  
-
   &::before {
     content: "";
     position: absolute;
@@ -14,16 +12,11 @@ $vac-padding: 2px;
     right: -1px;
     width: 1px;
   }
-  &--paid {
-    line-height: 2.3rem;
-    &::before {
-      height: 2.25rem;
-    }
-  }
+  &--paid,
   &--unpaid {
-    line-height: 2.1rem;
+    height: 2.25rem;
     &::before {
-      height: 2.05rem;
+      height: inherit;
     }
   }
 
@@ -44,6 +37,13 @@ $vac-padding: 2px;
     &::before {
       display: none;
     }
+  }
+  &__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 }
 

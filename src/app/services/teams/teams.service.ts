@@ -2,31 +2,47 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
 import { Observable, of } from 'rxjs'
-import { switchMap, catchError } from 'rxjs/operators'
+import { catchError, map } from 'rxjs/operators'
+
+import { MAIN_URL } from '../../constant'
 
 import { ITeam } from 'src/app/interfaces/team'
-import { IDepartmentTeams } from 'src/app/interfaces/departmentTeams'
+import { ITeams, ITeamsResponse } from 'src/app/interfaces/teams'
+import { ID } from 'src/app/interfaces/common' 
+import { IVacation } from 'src/app/interfaces/vacation'
+import { IMember } from 'src/app/interfaces/member'
 
+interface IIDs {
+  teamID: ID
+  memberID: ID
+}
+ 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
-  private TEAMS_URL: string = "https://calendar-25b31-default-rtdb.firebaseio.com/"
+  private TEAMS_URL: string = `${MAIN_URL}/teams`
 
   constructor(private http: HttpClient) { }
 
   getTeams(): Observable<ITeam[]> {
-    return this.http.get<IDepartmentTeams>(`${this.TEAMS_URL}.json`)
-    .pipe(
-      switchMap(({teams}) => of(teams)),
-      catchError(err => of(err))
-    )
+    return this.http.get<ITeamsResponse>(`${this.TEAMS_URL}.json`)
+      .pipe(
+        map(teams => {
+          const newTeams: ITeam[] = Object.values(teams)
+          newTeams.forEach(team => {
+            team.members = Object.values(team.members)
+            team.members.forEach(member => member.vacations = Object.values(member.vacations))
+          })
+          return newTeams
+        }),
+        catchError(err => of(err))
+      )
   }
-  // /teams/0/members/0/vacations
-  // TODO: Здесь нужен нормальный back-end чтобы не обновлять всю базу данных, а только отпуск 
-  putVacation(teams: ITeam[]): Observable<object> {
-    return this.http.put(`${this.TEAMS_URL}.json`, { teams }) 
-  }   
+
+  putVacation(IDs: IIDs, vacation: IVacation): Observable<object> {
+    return this.http.patch(`${this.TEAMS_URL}/${IDs.teamID}/members/${IDs.memberID}/vacations.json`, { [Date.now()]: vacation })
+  }
 }
 
 
